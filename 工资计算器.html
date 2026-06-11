@@ -448,14 +448,12 @@ function renderFin() { var d = state.data; if (!d) return; if (!d.finance) d.fin
   var st = 0, mt = 0; for (var i = 0; i < d.employees.length; i++) { var s = gs(d.employees[i].name); if (s.actualPay !== null) st += s.actualPay; mt += s.midDeduct || 0; }
   var et = 0; for (var j = 0; j < (d.expenses || []).length; j++) et += d.expenses[j].amount || 0;
   var ti = d.finance.transferIn !== undefined ? d.finance.transferIn : '', bp2 = d.finance.balancePrev || 0;
-  // 正确公式：本月总计 = 实发合计 + 上月结余 + 其他支出（不含月中支出，因为实发已扣除）
-  // 实发 = 应发 - 月中支出，所以不用再加月中支出
-  var gt = st + bp2 + et;
+  // 本月总计 = 实发合计 + 其他支出合计 - 上月结余
+  var gt = st + et - bp2;
   var bm = (Number(ti) || 0) - gt;
   d.finance.transferIn = ti; d.finance.balancePrev = bp2; d.finance.balanceMonth = Math.round(bm * 100) / 100;
   document.getElementById('finTotal').textContent = '¥' + gt.toFixed(2);
-  // 本月总计 = 实发 + 上月结余 + 其他支出
-  document.getElementById('finSub').innerHTML = '<span>实发 <b>' + st.toFixed(2) + '</b></span><span class="sep">+</span><span>上月结余 <b>' + bp2.toFixed(2) + '</b></span><span class="sep">+</span><span>其他支出 <b>' + et.toFixed(2) + '</b></span>';
+  document.getElementById('finSub').innerHTML = '<span>实发 <b>' + st.toFixed(2) + '</b></span><span class="sep">+</span><span>其他支出 <b>' + et.toFixed(2) + '</b></span><span class="sep">−</span><span>上月结余 <b>' + bp2.toFixed(2) + '</b></span>';
   document.getElementById('finTransferIn').value = ti !== '' ? ti : '';
   document.getElementById('finBalancePrev').value = bp2 !== '' ? bp2 : '';
   var re = document.getElementById('finResult'), rv = document.getElementById('finRemaining');
