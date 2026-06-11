@@ -444,6 +444,7 @@ function renderSal() {
 }
 
 function recalc(name) {
+  try {
   const sal = gs(name); const mode = sal.mode || 'monthly'; const iv = sal.inputValue !== undefined ? sal.inputValue : '';
   const wd = sal.workingDays !== undefined ? sal.workingDays : 0; const ed = sal.expectedDays || (state.data.totalDays - (state.data.restDays || 2));
   const bp = calcBase(mode, iv, wd, ed); const md = sal.midDeduct || 0; const ap = calcActual(bp, md);
@@ -451,16 +452,17 @@ function recalc(name) {
   const be = document.getElementById('bp-' + cs(name)), ae = document.getElementById('ap-' + cs(name));
   if (be) be.textContent = bp !== null ? '¥' + bp.toFixed(2) : '-';
   if (ae) ae.textContent = ap !== null ? '¥' + ap.toFixed(2) : '-';
+  } catch(e) { console.error('recalc error for', name, e); }
 }
-function onSalI(inp) { recalc(inp.dataset.name); updTotals(); renderFin(); }
-function onSalC(inp) { recalc(inp.dataset.name); updTotals(); renderFin();
+function onSalI(inp) { try { recalc(inp.dataset.name); updTotals(); renderFin(); } catch(e) { console.error(e); } }
+function onSalC(inp) { try { recalc(inp.dataset.name); updTotals(); renderFin();
   const name = inp.dataset.name; const sal = gs(name); const all = load();
   if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sal.mode || 'monthly'; all.emps[name].value = sal.inputValue !== undefined ? sal.inputValue : '';
-  saveAll(all); saveMonth();
+  saveAll(all); saveMonth(); } catch(e) { console.error(e); }
 }
-function onDaysC(inp) { const name = inp.dataset.name; const f = inp.dataset.field; const v = +inp.value || 0;
+function onDaysC(inp) { try { const name = inp.dataset.name; const f = inp.dataset.field; const v = +inp.value || 0;
   ss(name, { [f]: v }); if (f === 'workingDays') { const emp = state.data.employees.find(e => e.name === name); if (emp) emp.totalWorkingDays = v; }
-  recalc(name); updTotals(); renderFin(); saveMonth();
+  recalc(name); updTotals(); renderFin(); saveMonth(); } catch(e) { console.error(e); }
 }
 function onMode(sel) { const name = sel.dataset.name; ss(name, { mode: sel.value });
   const all = load(); if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sel.value; saveAll(all);
