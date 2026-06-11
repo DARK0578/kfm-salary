@@ -382,6 +382,7 @@ function hideAll() { document.querySelectorAll('.sec').forEach(s => s.classList.
 // ── Render ──
 function renderAll() { renderAtt(); renderSal(); renderExp(); renderFin();
   document.getElementById('attSec').classList.add('show'); document.getElementById('salSec').classList.add('show');
+  document.getElementById('expSec').classList.add('show'); document.getElementById('finSec').classList.add('show');
   document.getElementById('bottom').classList.add('show'); document.getElementById('btns').style.display = 'flex'; }
 
 function setView(v) { state.view = v;
