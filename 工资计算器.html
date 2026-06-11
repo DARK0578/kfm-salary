@@ -8,27 +8,19 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; background: #f2f4f7; color: #1a1d2e; padding: 10px 14px; -webkit-font-smoothing: antialiased; }
-
-/* ── Header ── */
 .app-header { margin-bottom: 10px; }
 .app-header h1 { font-size: 18px; font-weight: 800; color: #0f172a; }
 .app-header p { font-size: 12px; color: #64748b; margin-top: 1px; }
-
-/* ── Drop Zone ── */
 .dropzone { border: 2px dashed #cbd5e1; border-radius: 10px; padding: 22px 16px; text-align: center; background: #fff; cursor: pointer; transition: .15s; margin-bottom: 10px; }
 .dropzone:hover, .dropzone.active { border-color: #6366f1; background: #eef0ff; }
 .dropzone .icon { font-size: 28px; }
 .dropzone .text { font-size: 13px; font-weight: 600; color: #475569; margin-top: 4px; }
 .dropzone .hint { font-size: 11px; color: #94a3b8; margin-top: 3px; }
 .dropzone input { display: none; }
-
-/* ── File Bar ── */
 .filebar { display: none; align-items: center; gap: 8px; padding: 7px 12px; background: #eef2ff; border-radius: 7px; margin-bottom: 10px; font-size: 12px; }
 .filebar.show { display: flex; }
 .filebar .fname { font-weight: 600; flex: 1; }
 .filebar button { padding: 3px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; font-size: 11px; cursor: pointer; }
-
-/* ── Month Tabs ── */
 .tabs { display: none; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
 .tabs.show { display: flex; }
 .tab { padding: 5px 14px; border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; font-size: 12px; font-weight: 600; cursor: pointer; transition: .12s; }
@@ -36,15 +28,12 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, 
 .tab.active { background: #6366f1; color: #fff; border-color: #6366f1; }
 .tab .del { margin-left: 4px; opacity: .5; font-size: 10px; }
 .tab .del:hover { opacity: 1; }
-
-/* ── Section ── */
 .sec { background: #fff; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; border: 1px solid #e2e5e9; display: none; }
-.sec.show { display: block; }
+.sec.show { display: block !important; }
 .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .sec-head h2 { font-size: 14px; font-weight: 700; }
 .table-wrap { overflow-x: auto; border: 1px solid #e2e5e9; border-radius: 5px; }
 
-/* ── Attendance Table ── */
 table { border-collapse: collapse; width: 100%; font-size: 11px; }
 .att th, .att td { padding: 2px 4px; text-align: center; white-space: nowrap; min-width: 26px; border-right: 1px solid #e2e5e9; }
 .att th:last-child, .att td:last-child { border-right: none; }
@@ -60,7 +49,6 @@ table { border-collapse: collapse; width: 100%; font-size: 11px; }
 .att .d0 { color: #cbd5e1; }
 .att .sc { font-weight: 700; background: #eef2ff; color: #6366f1; font-size: 12px; }
 
-/* ── Salary Table ── */
 .sal { font-size: 12px; }
 .sal th, .sal td { padding: 4px 7px; text-align: center; border-right: 1px solid #e2e5e9; border-bottom: 1px solid #f1f5f9; }
 .sal th:last-child, .sal td:last-child { border-right: none; }
@@ -72,17 +60,13 @@ table { border-collapse: collapse; width: 100%; font-size: 11px; }
 .sal .ni { width: 50px; text-align: left; }
 .sal .ap { font-weight: 700; color: #6366f1; font-size: 13px; }
 .sal tr.tot td { background: #eef2ff; font-weight: 700; }
-
 .badge { display: inline-block; padding: 1px 5px; border-radius: 8px; font-size: 9px; font-weight: 600; margin-left: 3px; }
 .badge.warn { background: #fef3c7; color: #b45309; }
 .badge.man { background: #e0e7ff; color: #4f46e5; }
 
-/* ── Bottom Grid ── */
 .bottom { display: none; grid-template-columns: 1fr 1.3fr; gap: 10px; }
-.bottom.show { display: grid; }
+.bottom.show { display: grid !important; }
 .bottom .sec { margin-bottom: 0; }
-
-/* ── Expense ── */
 .exp { font-size: 12px; }
 .exp th, .exp td { padding: 3px 8px; text-align: center; border-right: 1px solid #e2e5e9; border-bottom: 1px solid #f1f5f9; }
 .exp th:last-child, .exp td:last-child { border-right: none; }
@@ -91,7 +75,6 @@ table { border-collapse: collapse; width: 100%; font-size: 11px; }
 .exp input:focus { outline: none; border-color: #6366f1; background: #fff; }
 .exp input.ei { width: 100%; text-align: left; }
 
-/* ── Finance ── */
 .fin-wrap { display: flex; flex-direction: column; gap: 8px; }
 .fin-card { text-align: center; background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%); border-radius: 10px; padding: 16px 20px 12px; color: #fff; }
 .fin-card .lbl { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing: .5px; margin-bottom: 4px; }
@@ -109,200 +92,141 @@ table { border-collapse: collapse; width: 100%; font-size: 11px; }
 .fin-result .rlbl { font-size: 12px; font-weight: 600; }
 .fin-result .rval { font-size: 22px; font-weight: 700; }
 
-/* ── Buttons ── */
 .btn { display: inline-flex; align-items: center; gap: 3px; padding: 5px 12px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .12s; }
-.btn-p { background: #6366f1; color: #fff; }
-.btn-p:hover { background: #4f46e5; }
-.btn-o { background: #fff; border: 1px solid #cbd5e1; color: #475569; }
-.btn-o:hover { background: #f8fafc; }
-.btn-r { color: #ef4444; border: 1px solid #fecaca; background: #fff; }
-.btn-r:hover { background: #fef2f2; }
+.btn-p { background: #6366f1; color: #fff; } .btn-p:hover { background: #4f46e5; }
+.btn-o { background: #fff; border: 1px solid #cbd5e1; color: #475569; } .btn-o:hover { background: #f8fafc; }
+.btn-r { color: #ef4444; border: 1px solid #fecaca; background: #fff; } .btn-r:hover { background: #fef2f2; }
 .btn-sm { padding: 2px 8px; font-size: 10px; border-radius: 4px; }
-.btn-g { background: #10b981; color: #fff; }
-.btn-g:hover { background: #059669; }
+.btn-g { background: #10b981; color: #fff; } .btn-g:hover { background: #059669; }
 .btns { display: flex; gap: 6px; margin-top: 10px; }
-
-/* ── Toggle ── */
-.toggle { display: flex; gap: 3px; margin-bottom: 8px; background: #f1f3f8; padding: 2px; border-radius: 6px; display: inline-flex; }
+.toggle { display: inline-flex; gap: 3px; margin-bottom: 8px; background: #f1f3f8; padding: 2px; border-radius: 6px; }
 .toggle button { padding: 4px 12px; border: none; border-radius: 5px; background: transparent; font-size: 11px; font-weight: 600; color: #64748b; cursor: pointer; transition: .12s; }
 .toggle button.on { background: #fff; color: #6366f1; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-
-/* ── Config ── */
 .cfg { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; padding: 4px 10px; background: #f8fafc; border-radius: 6px; font-size: 11px; color: #64748b; border: 1px solid #e2e5e9; }
 .cfg input { width: 36px; padding: 2px 4px; border: 1px solid #d1d5db; border-radius: 4px; text-align: center; font-size: 11px; }
-
-/* ── Modal ── */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; align-items: center; justify-content: center; }
-.modal.show { display: flex; }
+.modal.show { display: flex !important; }
 .modal > div { background: #fff; border-radius: 10px; padding: 18px 22px; min-width: 320px; }
 .modal h3 { font-size: 15px; margin-bottom: 12px; }
 .modal label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 2px; margin-top: 8px; }
 .modal input[type="text"] { width: 100%; padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 12px; }
 .modal input[type="text"]:focus { outline: none; border-color: #6366f1; }
-
-/* ── Print ── */
-@media print {
-  body { background: #fff; padding: 0; }
-  .app-header, .dropzone, .filebar, .tabs, .btns, .toggle, .cfg, .sec-head, .modal { display: none !important; }
-  .sec { box-shadow: none; border: none; padding: 4px 0; margin-bottom: 8px; display: block !important; page-break-inside: avoid; }
-  table { font-size: 10px; }
-  @page { size: A3 landscape; margin: 8mm; }
-}
-
-@media (max-width: 768px) {
-  body { padding: 6px; }
-  .sec { padding: 10px; }
-  .bottom { grid-template-columns: 1fr; }
-  .fin-card .num { font-size: 28px; }
-}
+@media print { body { background: #fff; padding: 0; } .app-header, .dropzone, .filebar, .tabs, .btns, .toggle, .cfg, .sec-head, .modal { display: none !important; } .sec { box-shadow: none; border: none; padding: 4px 0; margin-bottom: 8px; display: block !important; page-break-inside: avoid; } table { font-size: 10px; } @page { size: A3 landscape; margin: 8mm; } }
+@media (max-width: 768px) { body { padding: 6px; } .sec { padding: 10px; } .bottom { grid-template-columns: 1fr; } .fin-card .num { font-size: 28px; } }
 </style>
 </head>
 <body>
-
-<!-- Header -->
-<div class="app-header">
-  <h1>💰 工资计算器</h1>
-  <p>拖入钉钉打卡记录 xlsx · 自动生成打卡汇总 + 工资明细 · 半天判定 · 财务汇总</p>
-</div>
-
-<!-- Drop zone -->
+<div class="app-header"><h1>💰 工资计算器</h1><p>拖入钉钉打卡记录 xlsx · 自动生成打卡汇总 + 工资明细 · 半天判定 · 财务汇总</p></div>
 <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
-  <div class="icon">📂</div>
-  <div class="text">点击选择文件 或 拖拽 xlsx 到此处</div>
-  <div class="hint">支持钉钉导出的打卡时间报表</div>
+  <div class="icon">📂</div><div class="text">点击选择文件 或 拖拽 xlsx 到此处</div><div class="hint">支持钉钉导出的打卡时间报表</div>
   <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
 </div>
-
-<!-- File bar -->
 <div class="filebar" id="filebar"><span>📄</span><span class="fname" id="fname"></span><button onclick="resetUpload()">重新上传</button></div>
-
-<!-- Month tabs -->
 <div class="tabs" id="tabs"></div>
-
-<!-- Error -->
 <div class="sec show" id="errSec" style="display:none"><div style="color:#ef4444;font-weight:600" id="errMsg"></div></div>
 
-<!-- ══════ Attendance ══════ -->
-<div class="sec" id="attSec">
-  <div class="sec-head"><h2>📋 打卡记录汇总</h2></div>
-  <div class="toggle" id="toggle">
-    <button class="on" data-v="day" onclick="setView('day')">📊 出勤天数</button>
-    <button data-v="time" onclick="setView('time')">🕐 打卡时间</button>
-  </div>
+<div class="sec" id="attSec"><div class="sec-head"><h2>📋 打卡记录汇总</h2></div>
+  <div class="toggle"><button class="on" data-v="day" onclick="setView('day')">📊 出勤天数</button><button data-v="time" onclick="setView('time')">🕐 打卡时间</button></div>
   <div class="table-wrap"><table class="att" id="attTbl"></table></div>
 </div>
 
-<!-- ══════ Salary ══════ -->
-<div class="sec" id="salSec">
-  <div class="sec-head"><h2>🧮 工资计算</h2><button class="btn btn-g btn-sm" onclick="showAddEmp()">+ 新增人员</button></div>
+<div class="sec" id="salSec"><div class="sec-head"><h2>🧮 工资计算</h2><button class="btn btn-g btn-sm" onclick="showAddEmp()">+ 新增人员</button></div>
   <div class="cfg">固定休息: <input type="number" id="restDays" value="2" min="0" max="31" onchange="onRestChange()"> <span>· 应出勤 = 当月总天数 − 休息日 · 半天 &lt; 5h = 0.5天</span></div>
   <div class="table-wrap"><table class="sal" id="salTbl"></table></div>
 </div>
 
-<!-- ══════ Bottom: Expense + Finance ══════ -->
 <div class="bottom" id="bottom">
-  <!-- Expenses -->
-  <div class="sec" id="expSec">
-    <div class="sec-head"><h2>💸 其他支出</h2><button class="btn btn-g btn-sm" onclick="addExpense()">+ 添加</button></div>
+  <div class="sec" id="expSec"><div class="sec-head"><h2>💸 其他支出</h2><button class="btn btn-g btn-sm" onclick="addExpense()">+ 添加</button></div>
     <div class="table-wrap"><table class="exp" id="expTbl"></table></div>
   </div>
-
-  <!-- Finance -->
-  <div class="sec" style="padding:0;border:none;background:transparent" id="finSec">
-    <div class="fin-wrap">
-      <div class="fin-card">
-        <div class="lbl">本月总计</div>
-        <div class="num" id="finTotal">¥0.00</div>
-        <div class="sub" id="finSub"></div>
-      </div>
-      <div class="fin-row"><label>本月实际转入</label><input type="number" step="0.01" id="finTransferIn" onchange="onFinChange()" placeholder="财务打款金额"></div>
-      <div class="fin-row"><label>上月结余</label><input type="number" step="0.01" id="finBalancePrev" onchange="onFinChange()" placeholder="可正可负"></div>
-      <div class="fin-result pos" id="finResult"><span class="rlbl">本月剩余</span><span class="rval" id="finRemaining">¥0.00</span></div>
-    </div>
-  </div>
+  <div class="sec" style="padding:0;border:none;background:transparent" id="finSec"><div class="fin-wrap">
+    <div class="fin-card"><div class="lbl">本月总计</div><div class="num" id="finTotal">¥0.00</div><div class="sub" id="finSub"></div></div>
+    <div class="fin-row"><label>本月实际转入</label><input type="number" step="0.01" id="finTransferIn" onchange="onFinChange()" placeholder="财务打款金额"></div>
+    <div class="fin-row"><label>上月结余</label><input type="number" step="0.01" id="finBalancePrev" onchange="onFinChange()" placeholder="可正可负"></div>
+    <div class="fin-result pos" id="finResult"><span class="rlbl">本月剩余</span><span class="rval" id="finRemaining">¥0.00</span></div>
+  </div></div>
 </div>
 
-<!-- Buttons -->
 <div class="btns" style="display:none" id="btns">
   <button class="btn btn-p" onclick="exportXlsx()">📥 导出 Excel</button>
   <button class="btn btn-o" onclick="window.print()">🖨️ 打印 / 导出 PDF</button>
   <button class="btn btn-r" onclick="deleteCurrentMonth()">🗑️ 删除当前月份</button>
 </div>
 
-<!-- Add Employee Modal -->
-<div class="modal" id="addEmpModal">
-  <div>
-    <h3>新增人员</h3>
-    <label>姓名</label><input type="text" id="newName" placeholder="输入姓名">
-    <label>部门</label><input type="text" id="newDept" placeholder="输入部门（可选）">
-    <div class="btns" style="margin-top:16px">
-      <button class="btn btn-p" onclick="addEmployee()">确定</button>
-      <button class="btn btn-o" onclick="closeAddEmp()">取消</button>
-    </div>
+<div class="modal" id="addEmpModal"><div>
+  <h3>新增人员</h3>
+  <label>姓名</label><input type="text" id="newName" placeholder="输入姓名">
+  <label>部门</label><input type="text" id="newDept" placeholder="输入部门（可选）">
+  <div class="btns" style="margin-top:16px">
+    <button class="btn btn-p" onclick="addEmployee()">确定</button>
+    <button class="btn btn-o" onclick="closeAddEmp()">取消</button>
   </div>
-</div>
+</div></div>
 
 <script>
 // ═══════════════════════════════════════════════
-// 工资计算器 v5
+// 工资计算器 v5 — 字符串拼接版 (无模板字面量)
 // ═══════════════════════════════════════════════
-const STORE = 'kfm_v5';
-const HALF_HOURS = 5;
-let state = { month: null, data: null, view: 'day' };
-let expId = Date.now();
+var STORE = 'kfm_v5x';
+var HALF_HOURS = 5;
+var state = { month: null, data: null, view: 'day' };
+var expId = Date.now();
 
 // ── Storage ──
-function load() { try { const r = localStorage.getItem(STORE); return r ? JSON.parse(r) : { emps: {}, months: {} }; } catch { return { emps: {}, months: {} }; } }
-function saveAll(d) { try { localStorage.setItem(STORE, JSON.stringify(d)); } catch {} }
-function saveMonth() { const d = load(); if (state.data) { d.months[state.month] = state.data; saveAll(d); } }
+function load() { try { var r = localStorage.getItem(STORE); return r ? JSON.parse(r) : { emps: {}, months: {} }; } catch(e) { return { emps: {}, months: {} }; } }
+function saveAll(d) { try { localStorage.setItem(STORE, JSON.stringify(d)); } catch(e) {} }
+function saveMonth() { var d = load(); if (state.data) { d.months[state.month] = state.data; saveAll(d); } }
 
-// ── Time helpers ──
-function t2m(t) { const [h, m] = t.split(':').map(Number); return h * 60 + m; }
+// ── Helpers ──
+function t2m(t) { var p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
 function calcWeight(times) {
   if (!times || times.length === 0) return { w: 0, h: 0 };
-  const mins = times.map(t2m);
-  const hours = (Math.max(...mins) - Math.min(...mins)) / 60;
+  var mins = times.map(t2m); var hours = (Math.max.apply(null, mins) - Math.min.apply(null, mins)) / 60;
   if (hours >= HALF_HOURS) return { w: 1, h: Math.round(hours * 10) / 10 };
   if (hours > 0) return { w: 0.5, h: Math.round(hours * 10) / 10 };
   return { w: 0, h: 0 };
 }
 function dow(y, m, d) { return ['日','一','二','三','四','五','六'][new Date(y, m - 1, d).getDay()]; }
-function isWE(y, m, d) { return [0, 6].includes(new Date(y, m - 1, d).getDay()); }
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-function cs(n) { return n.replace(/[^a-zA-Z0-9一-鿿]/g, '_'); }
-function prevKey(y, m) { return m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`; }
+function isWE(y, m, d) { return [0, 6].indexOf(new Date(y, m - 1, d).getDay()) !== -1; }
+function esc(s) { var d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+function cs(n) { return String(n).replace(/[^a-zA-Z0-9\\u4e00-\\u9fff]/g, '_'); }
+function prevKey(y, m) { return m === 1 ? (y - 1) + '-12' : y + '-' + (m < 11 ? '0' : '') + (m - 1); }
 
 function calcBase(mode, val, wd, ed) {
-  if (val === '' || isNaN(+val) || +val < 0) return null;
-  const n = +val;
-  if (mode === 'daily') return +(wd * n).toFixed(2);
+  if (val === '' || isNaN(Number(val)) || Number(val) < 0) return null;
+  var n = Number(val);
+  if (mode === 'daily') { var r = wd * n; return Math.round(r * 100) / 100; }
   if (ed <= 0) return 0;
-  return +((wd / ed) * n).toFixed(2);
+  var r2 = (wd / ed) * n; return Math.round(r2 * 100) / 100;
 }
-function calcActual(bp, md) { if (bp === null) return null; return +(bp - (md || 0)).toFixed(2); }
+function calcActual(bp, md) { if (bp === null) return null; var r = bp - (md || 0); return Math.round(r * 100) / 100; }
 
 // ── File ──
-const dz = document.getElementById('dropzone');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('active'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('active'));
-dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('active'); const f = e.dataTransfer.files[0]; if (f) processFile(f); });
-function handleFile(ev) { const f = ev.target.files[0]; if (f) processFile(f); }
+var dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('active'); });
+dz.addEventListener('dragleave', function() { dz.classList.remove('active'); });
+dz.addEventListener('drop', function(e) { e.preventDefault(); dz.classList.remove('active'); var f = e.dataTransfer.files[0]; if (f) processFile(f); });
+function handleFile(ev) { var f = ev.target.files[0]; if (f) processFile(f); }
 function resetUpload() { document.getElementById('filebar').classList.remove('show'); document.getElementById('dropzone').style.display = ''; document.getElementById('fileInput').value = ''; }
 
 function processFile(file) {
-  const reader = new FileReader();
+  var reader = new FileReader();
   reader.onload = function(e) {
     try {
-      const data = new Uint8Array(e.target.result);
-      const wb = XLSX.read(data, { type: 'array' });
-      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
-      const parsed = parseRows(rows, file.name);
-      const mk = `${parsed.year}-${String(parsed.month).padStart(2, '0')}`;
-      const all = load(); const existing = all.months[mk];
+      var data = new Uint8Array(e.target.result);
+      var wb = XLSX.read(data, { type: 'array' });
+      var rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
+      var parsed = parseRows(rows, file.name);
+      var mk = parsed.year + '-' + (parsed.month < 10 ? '0' : '') + parsed.month;
+      var all = load();
+      var existing = all.months[mk];
 
       if (existing && existing.manual) {
-        for (const me of existing.manual) {
-          if (!parsed.employees.find(e => e.name === me.name)) {
+        for (var i = 0; i < existing.manual.length; i++) {
+          var me = existing.manual[i];
+          var found = false;
+          for (var j = 0; j < parsed.employees.length; j++) { if (parsed.employees[j].name === me.name) { found = true; break; } }
+          if (!found) {
             parsed.employees.push(makeEmpty(me.name, me.dept, parsed.totalDays));
             parsed.salary[me.name] = existing.salary[me.name] || defSalary(parsed.totalDays - parsed.restDays);
           }
@@ -310,8 +234,9 @@ function processFile(file) {
         parsed.manual = existing.manual;
       }
       if (existing) { parsed.expenses = existing.expenses || []; parsed.finance = existing.finance || {}; parsed.restDays = existing.restDays !== undefined ? existing.restDays : parsed.restDays; }
-      for (const emp of parsed.employees) {
-        const saved = (all.emps || {})[emp.name] || {};
+      for (var k = 0; k < parsed.employees.length; k++) {
+        var emp = parsed.employees[k];
+        var saved = (all.emps || {})[emp.name] || {};
         if (!parsed.salary[emp.name]) parsed.salary[emp.name] = defSalary(parsed.totalDays - parsed.restDays);
         parsed.salary[emp.name].mode = saved.mode || parsed.salary[emp.name].mode || 'monthly';
         parsed.salary[emp.name].inputValue = saved.value !== undefined ? saved.value : (parsed.salary[emp.name].inputValue || '');
@@ -332,52 +257,57 @@ function processFile(file) {
 }
 
 function parseRows(rows, fileName) {
-  const t = String(rows[0][0] || ''); const m = t.match(/(\d{4})-(\d{2})-(\d{2})\s*至\s*(\d{4})-(\d{2})-(\d{2})/); if (!m) throw new Error('无法提取日期范围');
-  const yr = +m[1], mo = +m[2], td = +m[6];
-  const all = load(); const mk = `${yr}-${String(mo).padStart(2, '0')}`; const existing = all.months[mk];
-  const employees = [];
-  for (let i = 4; i < rows.length; i++) { const row = rows[i]; if (!row || !row[0]) continue; const nm = String(row[0]).trim(); if (!nm) continue; employees.push(buildEmp(nm, String(row[1] || '').trim(), row, td)); }
-  const rd = existing ? existing.restDays : 2; const salary = {}; const se = all.emps || {};
-  const pmk = prevKey(yr, mo); const pm = all.months[pmk];
-  for (const emp of employees) {
-    const sv = se[emp.name] || {}; const mode = sv.mode || 'monthly'; const iv = sv.value !== undefined ? sv.value : '';
-    const ed = td - rd; const bp = calcBase(mode, iv, emp.totalWorkingDays, ed);
-    let md = 0; if (existing && existing.salary && existing.salary[emp.name]) md = existing.salary[emp.name].midDeduct || 0;
-    const ap = calcActual(bp, md);
-    let note = ''; if (existing && existing.salary && existing.salary[emp.name]) note = existing.salary[emp.name].note || '';
-    salary[emp.name] = { mode, inputValue: iv, workingDays: emp.totalWorkingDays, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note };
+  var t = String(rows[0][0] || '');
+  var m = t.match(/(\d{4})-(\d{2})-(\d{2})\s*至\s*(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) throw new Error('无法提取日期范围');
+  var yr = parseInt(m[1]), mo = parseInt(m[2]), td = parseInt(m[6]);
+  var all = load(), mk = yr + '-' + (mo < 10 ? '0' : '') + mo, existing = all.months[mk];
+  var employees = [];
+  for (var i = 4; i < rows.length; i++) { var row = rows[i]; if (!row || !row[0]) continue; var nm = String(row[0]).trim(); if (!nm) continue; employees.push(buildEmp(nm, String(row[1] || '').trim(), row, td)); }
+  var rd = existing ? existing.restDays : 2, salary = {}, se = all.emps || {};
+  var pmk = prevKey(yr, mo), pm = all.months[pmk];
+  for (var j = 0; j < employees.length; j++) {
+    var emp = employees[j];
+    var sv = se[emp.name] || {}, mode = sv.mode || 'monthly', iv = sv.value !== undefined ? sv.value : '';
+    var ed = td - rd, bp = calcBase(mode, iv, emp.totalWorkingDays, ed);
+    var md = 0; if (existing && existing.salary && existing.salary[emp.name]) md = existing.salary[emp.name].midDeduct || 0;
+    var ap = calcActual(bp, md);
+    var note = ''; if (existing && existing.salary && existing.salary[emp.name]) note = existing.salary[emp.name].note || '';
+    salary[emp.name] = { mode: mode, inputValue: iv, workingDays: emp.totalWorkingDays, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note: note };
   }
-  let fin = {}; if (existing && existing.finance) fin = { ...existing.finance };
+  var fin = {}; if (existing && existing.finance) fin = JSON.parse(JSON.stringify(existing.finance));
   if (pm && pm.finance && fin.balancePrev === undefined) fin.balancePrev = pm.finance.balanceMonth || 0;
-  return { fileName, year: yr, month: mo, totalDays: td, restDays: rd, employees, salary, expenses: existing ? (existing.expenses || []) : [], finance: fin, manual: existing ? (existing.manual || []) : [] };
+  return { fileName: fileName, year: yr, month: mo, totalDays: td, restDays: rd, employees: employees, salary: salary, expenses: existing ? (existing.expenses || []) : [], finance: fin, manual: existing ? (existing.manual || []) : [] };
 }
 
 function buildEmp(name, dept, row, td) {
-  const dd = []; let tw = 0;
-  for (let d = 0; d < td; d++) { const raw = String(row[6 + d] || ''); const times = parseTimes(raw); const { w, h } = calcWeight(times); tw += w; dd.push({ day: d + 1, times: times || [], hours: h, weight: w }); }
-  return { name, department: dept, dailyDetail: dd, totalWorkingDays: +tw.toFixed(1) };
+  var dd = [], tw = 0;
+  for (var d = 0; d < td; d++) { var raw = String(row[6 + d] || ''); var times = parseTimes(raw); var w = calcWeight(times); tw += w.w; dd.push({ day: d + 1, times: times || [], hours: w.h, weight: w.w }); }
+  return { name: name, department: dept, dailyDetail: dd, totalWorkingDays: Math.round(tw * 10) / 10 };
 }
-function parseTimes(raw) { if (!raw || !raw.trim()) return null; const times = []; for (const line of raw.split(/\n|\r\n?/)) { const m = line.trim().match(/(\d{1,2}:\d{2})/); if (m) times.push(m[1]); } return times.length > 0 ? times : null; }
-function makeEmpty(name, dept, td) { const dd = []; for (let d = 0; d < td; d++) dd.push({ day: d + 1, times: [], hours: 0, weight: 0 }); return { name, department: dept, dailyDetail: dd, totalWorkingDays: 0, isManual: true }; }
+function parseTimes(raw) { if (!raw || !raw.trim()) return null; var times = []; var lines = raw.split(/\n|\r\n?/); for (var i = 0; i < lines.length; i++) { var m = lines[i].trim().match(/(\d{1,2}:\d{2})/); if (m) times.push(m[1]); } return times.length > 0 ? times : null; }
+function makeEmpty(name, dept, td) { var dd = []; for (var d = 0; d < td; d++) dd.push({ day: d + 1, times: [], hours: 0, weight: 0 }); return { name: name, department: dept, dailyDetail: dd, totalWorkingDays: 0, isManual: true }; }
 function defSalary(ed) { return { mode: 'monthly', inputValue: '', workingDays: 0, expectedDays: ed, basePay: null, midDeduct: 0, actualPay: null, note: '' }; }
 
 // ── Tabs ──
 function renderTabs() {
-  const c = document.getElementById('tabs'); const all = load(); const months = Object.keys(all.months).sort();
+  var c = document.getElementById('tabs'), all = load(), months = Object.keys(all.months).sort();
   if (!months.length) { c.classList.remove('show'); return; }
   c.classList.add('show');
-  c.innerHTML = months.map(mk => `<div class="tab${mk === state.month ? ' active' : ''}" onclick="switchMonth('${mk}')">${all.months[mk].year}年${all.months[mk].month}月 <span class="del" onclick="event.stopPropagation();deleteMonth('${mk}')">✕</span></div>`).join('');
+  var h = '';
+  for (var i = 0; i < months.length; i++) { var mk = months[i]; h += '<div class="tab' + (mk === state.month ? ' active' : '') + '" onclick="switchMonth(\'' + mk + '\')">' + all.months[mk].year + '年' + all.months[mk].month + '月 <span class="del" onclick="event.stopPropagation();deleteMonth(\'' + mk + '\')">✕</span></div>'; }
+  c.innerHTML = h;
 }
-function switchMonth(mk) { const all = load(); const md = all.months[mk]; if (!md) return; state.month = mk; state.data = md;
+function switchMonth(mk) { var all = load(), md = all.months[mk]; if (!md) return; state.month = mk; state.data = md;
   document.getElementById('dropzone').style.display = 'none'; document.getElementById('filebar').classList.add('show');
   document.getElementById('fname').textContent = md.fileName || '(未知文件)'; document.getElementById('restDays').value = md.restDays || 2;
   document.getElementById('errSec').style.display = 'none'; renderTabs(); renderAll(); }
-function deleteMonth(mk) { if (!confirm(`删除 ${mk.replace('-','年')}月？不可恢复。`)) return;
-  const all = load(); delete all.months[mk]; saveAll(all);
+function deleteMonth(mk) { if (!confirm('删除 ' + mk.replace('-','年') + '月？不可恢复。')) return;
+  var all = load(); delete all.months[mk]; saveAll(all);
   if (state.month === mk) { state.month = null; state.data = null; hideAll(); document.getElementById('filebar').classList.remove('show'); document.getElementById('dropzone').style.display = ''; }
   renderTabs(); }
 function deleteCurrentMonth() { if (state.month) deleteMonth(state.month); }
-function hideAll() { document.querySelectorAll('.sec').forEach(s => s.classList.remove('show')); document.getElementById('bottom').classList.remove('show'); document.getElementById('btns').style.display = 'none'; }
+function hideAll() { var secs = document.querySelectorAll('.sec'); for (var i = 0; i < secs.length; i++) secs[i].classList.remove('show'); document.getElementById('bottom').classList.remove('show'); document.getElementById('btns').style.display = 'none'; }
 
 // ── Render ──
 function renderAll() { renderAtt(); renderSal(); renderExp(); renderFin();
@@ -386,165 +316,178 @@ function renderAll() { renderAtt(); renderSal(); renderExp(); renderFin();
   document.getElementById('bottom').classList.add('show'); document.getElementById('btns').style.display = 'flex'; }
 
 function setView(v) { state.view = v;
-  document.querySelectorAll('#toggle button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  var btns = document.querySelectorAll('#toggle button');
+  for (var i = 0; i < btns.length; i++) { btns[i].classList.toggle('on', btns[i].getAttribute('data-v') === v); }
   renderAtt(); }
 
 function renderAtt() {
-  const d = state.data; if (!d) return;
-  const tbl = document.getElementById('attTbl'); const v = state.view;
-  let h = '<thead><tr><th class="nc" rowspan="2">姓名</th>';
-  for (let i = 1; i <= d.totalDays; i++) h += `<th class="${isWE(d.year, d.month, i) ? 'we' : ''}">${i}</th>`;
+  var d = state.data; if (!d) return;
+  var tbl = document.getElementById('attTbl'), v = state.view;
+  var h = '<thead><tr><th class="nc" rowspan="2">姓名</th>';
+  for (var i = 1; i <= d.totalDays; i++) h += '<th class="' + (isWE(d.year, d.month, i) ? 'we' : '') + '">' + i + '</th>';
   h += '<th class="sum" rowspan="2">出勤</th></tr><tr>';
-  for (let i = 1; i <= d.totalDays; i++) h += `<th class="${isWE(d.year, d.month, i) ? 'we' : ''}">${dow(d.year, d.month, i)}</th>`;
+  for (var i = 1; i <= d.totalDays; i++) h += '<th class="' + (isWE(d.year, d.month, i) ? 'we' : '') + '">' + dow(d.year, d.month, i) + '</th>';
   h += '</tr></thead><tbody>';
-  for (const emp of d.employees) {
-    h += `<tr><td class="nc">${esc(emp.name)}${emp.totalWorkingDays === 0 ? '<span class="badge warn">无打卡</span>' : ''}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td>`;
-    for (const dd of emp.dailyDetail) {
+  for (var ei = 0; ei < d.employees.length; ei++) {
+    var emp = d.employees[ei];
+    h += '<tr><td class="nc">' + esc(emp.name) + (emp.totalWorkingDays === 0 ? '<span class="badge warn">无打卡</span>' : '') + (emp.isManual ? '<span class="badge man">手动</span>' : '') + '</td>';
+    for (var di = 0; di < emp.dailyDetail.length; di++) {
+      var dd = emp.dailyDetail[di];
       if (v === 'day') {
         if (dd.weight === 1) h += '<td class="d1">1</td>';
         else if (dd.weight === 0.5) h += '<td class="d05">0.5</td>';
         else h += '<td class="d0">·</td>';
       } else {
-        if (dd.times.length > 0) h += `<td class="${dd.weight === 0.5 ? 'd05' : ''}" style="font-size:10px">${esc(dd.times[0])}→${esc(dd.times[dd.times.length - 1])}</td>`;
+        if (dd.times.length > 0) h += '<td class="' + (dd.weight === 0.5 ? 'd05' : '') + '" style="font-size:10px">' + esc(String(dd.times[0])) + '→' + esc(String(dd.times[dd.times.length - 1])) + '</td>';
         else h += '<td class="d0">·</td>';
       }
     }
-    h += `<td class="sc">${emp.totalWorkingDays}</td></tr>`;
+    h += '<td class="sc">' + emp.totalWorkingDays + '</td></tr>';
   }
   h += '</tbody>'; tbl.innerHTML = h;
 }
 
 // ── Salary ──
 function gs(n) { return (state.data.salary || {})[n] || {}; }
-function ss(n, u) { if (!state.data.salary) state.data.salary = {}; if (!state.data.salary[n]) state.data.salary[n] = {}; Object.assign(state.data.salary[n], u); }
+function ss(n, u) { if (!state.data.salary) state.data.salary = {}; if (!state.data.salary[n]) state.data.salary[n] = {}; var keys = Object.keys(u); for (var i = 0; i < keys.length; i++) state.data.salary[n][keys[i]] = u[keys[i]]; }
 
 function renderSal() {
-  const d = state.data; if (!d) return;
-  const tbl = document.getElementById('salTbl'); const ed = d.totalDays - (d.restDays || 2);
-  let h = '<thead><tr><th>姓名</th><th>部门</th><th>方式</th><th>金额</th><th>出勤</th><th>应出勤</th><th>应发</th><th>月中支出</th><th>实发</th><th>备注</th><th></th></tr></thead><tbody>';
-  let tb = 0, tm = 0, ta = 0;
-  for (const emp of d.employees) {
-    const sal = gs(emp.name); const mode = sal.mode || 'monthly'; const iv = sal.inputValue !== undefined ? sal.inputValue : '';
-    const wd = emp.totalWorkingDays; const bp = calcBase(mode, iv, wd, ed); const md = sal.midDeduct || 0; const ap = calcActual(bp, md); const note = sal.note || '';
-    ss(emp.name, { mode, inputValue: iv, workingDays: wd, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note });
+  var d = state.data; if (!d) return;
+  var tbl = document.getElementById('salTbl'), ed = d.totalDays - (d.restDays || 2);
+  var h = '<thead><tr><th>姓名</th><th>部门</th><th>方式</th><th>金额</th><th>出勤</th><th>应出勤</th><th>应发</th><th>月中支出</th><th>实发</th><th>备注</th><th></th></tr></thead><tbody>';
+  var tb = 0, tm = 0, ta = 0;
+  for (var ei = 0; ei < d.employees.length; ei++) {
+    var emp = d.employees[ei];
+    var sal = gs(emp.name), mode = sal.mode || 'monthly', iv = sal.inputValue !== undefined ? sal.inputValue : '';
+    var wd = emp.totalWorkingDays, bp = calcBase(mode, iv, wd, ed), md = sal.midDeduct || 0, ap = calcActual(bp, md), note = sal.note || '';
+    ss(emp.name, { mode: mode, inputValue: iv, workingDays: wd, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note: note });
     if (bp !== null) tb += bp; tm += md; if (ap !== null) ta += ap;
-    h += `<tr><td class="nc">${esc(emp.name)}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td><td>${esc(emp.department)}</td>`;
-    h += `<td><select data-name="${esc(emp.name)}" onchange="onMode(this)"><option value="monthly"${mode==='monthly'?' selected':''}>月薪</option><option value="daily"${mode==='daily'?' selected':''}>日薪</option></select></td>`;
-    h += `<td><input type="number" min="0" step="0.01" value="${esc(String(iv))}" data-name="${esc(emp.name)}" data-field="inputValue" placeholder="${mode==='daily'?'日薪':'月薪'}" onchange="onSalC(this)" oninput="onSalI(this)"></td>`;
-    h += `<td><input class="di" type="number" min="0" step="0.5" value="${wd}" data-name="${esc(emp.name)}" data-field="workingDays" onchange="onDaysC(this)" oninput="onSalI(this)"></td>`;
-    h += `<td><input class="di" type="number" min="0" step="1" value="${ed}" data-name="${esc(emp.name)}" data-field="expectedDays" onchange="onDaysC(this)" oninput="onSalI(this)"></td>`;
-    h += `<td class="base-pay" id="bp-${cs(emp.name)}">${bp!==null?'¥'+bp.toFixed(2):'-'}</td>`;
-    h += `<td><input type="number" min="0" step="0.01" value="${esc(String(md))}" data-name="${esc(emp.name)}" data-field="midDeduct" onchange="onSalC(this)" oninput="onSalI(this)" style="width:64px"></td>`;
-    h += `<td class="ap" id="ap-${cs(emp.name)}">${ap!==null?'¥'+ap.toFixed(2):'-'}</td>`;
-    h += `<td><input class="ni" type="text" value="${esc(note)}" data-name="${esc(emp.name)}" data-field="note" onchange="onSalC(this)" placeholder="..."></td>`;
-    h += `<td><button class="btn btn-r btn-sm" onclick="removeEmp('${esc(emp.name)}')">移除</button></td></tr>`;
+    var nid = cs(emp.name);
+    h += '<tr><td class="nc">' + esc(emp.name) + (emp.isManual ? '<span class="badge man">手动</span>' : '') + '</td><td>' + esc(emp.department) + '</td>';
+    h += '<td><select onchange="onMode(this)" data-n="' + esc(emp.name) + '"><option value="monthly"' + (mode === 'monthly' ? ' selected' : '') + '>月薪</option><option value="daily"' + (mode === 'daily' ? ' selected' : '') + '>日薪</option></select></td>';
+    h += '<td><input type="number" min="0" step="0.01" value="' + esc(String(iv)) + '" data-n="' + esc(emp.name) + '" data-f="inputValue" placeholder="' + (mode === 'daily' ? '日薪' : '月薪') + '" onchange="onSalC(this)" oninput="onSalI(this)"></td>';
+    h += '<td><input class="di" type="number" min="0" step="0.5" value="' + wd + '" data-n="' + esc(emp.name) + '" data-f="workingDays" onchange="onDaysC(this)" oninput="onSalI(this)"></td>';
+    h += '<td><input class="di" type="number" min="0" step="1" value="' + ed + '" data-n="' + esc(emp.name) + '" data-f="expectedDays" onchange="onDaysC(this)" oninput="onSalI(this)"></td>';
+    h += '<td id="bp-' + nid + '">' + (bp !== null ? '¥' + bp.toFixed(2) : '-') + '</td>';
+    h += '<td><input type="number" min="0" step="0.01" value="' + esc(String(md)) + '" data-n="' + esc(emp.name) + '" data-f="midDeduct" onchange="onSalC(this)" oninput="onSalI(this)" style="width:64px"></td>';
+    h += '<td class="ap" id="ap-' + nid + '">' + (ap !== null ? '¥' + ap.toFixed(2) : '-') + '</td>';
+    h += '<td><input class="ni" type="text" value="' + esc(note) + '" data-n="' + esc(emp.name) + '" data-f="note" onchange="onSalC(this)" placeholder="..."></td>';
+    h += '<td><button class="btn btn-r btn-sm" onclick="removeEmp(\'' + esc(emp.name) + '\')">移除</button></td></tr>';
   }
-  h += `<tr class="tot"><td colspan="6">合计</td><td>¥${tb.toFixed(2)}</td><td>¥${tm.toFixed(2)}</td><td>¥${ta.toFixed(2)}</td><td></td><td></td></tr></tbody>`;
+  h += '<tr class="tot"><td colspan="6">合计</td><td>¥' + tb.toFixed(2) + '</td><td>¥' + tm.toFixed(2) + '</td><td>¥' + ta.toFixed(2) + '</td><td></td><td></td></tr></tbody>';
   tbl.innerHTML = h; saveMonth();
 }
 
 function recalc(name) {
-  try {
-  const sal = gs(name); const mode = sal.mode || 'monthly'; const iv = sal.inputValue !== undefined ? sal.inputValue : '';
-  const wd = sal.workingDays !== undefined ? sal.workingDays : 0; const ed = sal.expectedDays || (state.data.totalDays - (state.data.restDays || 2));
-  const bp = calcBase(mode, iv, wd, ed); const md = sal.midDeduct || 0; const ap = calcActual(bp, md);
+  var sal = gs(name), mode = sal.mode || 'monthly', iv = sal.inputValue !== undefined ? sal.inputValue : '';
+  var wd = sal.workingDays !== undefined ? sal.workingDays : 0, ed = sal.expectedDays || (state.data.totalDays - (state.data.restDays || 2));
+  var bp = calcBase(mode, iv, wd, ed), md = sal.midDeduct || 0, ap = calcActual(bp, md);
   ss(name, { basePay: bp, actualPay: ap, workingDays: wd, expectedDays: ed });
-  const be = document.getElementById('bp-' + cs(name)), ae = document.getElementById('ap-' + cs(name));
+  var be = document.getElementById('bp-' + cs(name)), ae = document.getElementById('ap-' + cs(name));
   if (be) be.textContent = bp !== null ? '¥' + bp.toFixed(2) : '-';
   if (ae) ae.textContent = ap !== null ? '¥' + ap.toFixed(2) : '-';
-  } catch(e) { console.error('recalc error for', name, e); }
 }
-function onSalI(inp) { try { recalc(inp.dataset.name); updTotals(); renderFin(); } catch(e) { console.error(e); } }
-function onSalC(inp) { try { recalc(inp.dataset.name); updTotals(); renderFin();
-  const name = inp.dataset.name; const sal = gs(name); const all = load();
-  if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sal.mode || 'monthly'; all.emps[name].value = sal.inputValue !== undefined ? sal.inputValue : '';
-  saveAll(all); saveMonth(); } catch(e) { console.error(e); }
+function onSalI(inp) { var n = inp.getAttribute('data-n'); var f = inp.getAttribute('data-f');
+  if (f === 'inputValue') { ss(n, { inputValue: inp.value }); }
+  else if (f === 'midDeduct') { ss(n, { midDeduct: inp.value === '' ? 0 : Number(inp.value) }); }
+  else if (f === 'workingDays') { ss(n, { workingDays: Number(inp.value) || 0 }); var emp = findEmp(n); if (emp) emp.totalWorkingDays = Number(inp.value) || 0; }
+  else if (f === 'expectedDays') { ss(n, { expectedDays: Number(inp.value) || 0 }); }
+  recalc(n); updTotals(); renderFin(); }
+function findEmp(name) { var d = state.data; if (!d) return null; for (var i = 0; i < d.employees.length; i++) { if (d.employees[i].name === name) return d.employees[i]; } return null; }
+function onSalC(inp) { onSalI(inp);
+  var n = inp.getAttribute('data-n'), sal = gs(n), all = load();
+  if (!all.emps[n]) all.emps[n] = {}; all.emps[n].mode = sal.mode || 'monthly'; all.emps[n].value = sal.inputValue !== undefined ? sal.inputValue : '';
+  saveAll(all); saveMonth();
 }
-function onDaysC(inp) { try { const name = inp.dataset.name; const f = inp.dataset.field; const v = +inp.value || 0;
-  ss(name, { [f]: v }); if (f === 'workingDays') { const emp = state.data.employees.find(e => e.name === name); if (emp) emp.totalWorkingDays = v; }
-  recalc(name); updTotals(); renderFin(); saveMonth(); } catch(e) { console.error(e); }
-}
-function onMode(sel) { const name = sel.dataset.name; ss(name, { mode: sel.value });
-  const all = load(); if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sel.value; saveAll(all);
-  const inp = document.querySelector(`input[data-name="${esc(name)}"][data-field="inputValue"]`);
-  if (inp) { inp.placeholder = sel.value === 'daily' ? '日薪' : '月薪'; recalc(name); updTotals(); renderFin(); } saveMonth();
+function onDaysC(inp) { onSalI(inp); saveMonth(); }
+function onMode(sel) { var n = sel.getAttribute('data-n'); ss(n, { mode: sel.value });
+  var all = load(); if (!all.emps[n]) all.emps[n] = {}; all.emps[n].mode = sel.value; saveAll(all);
+  var inp = document.querySelector('input[data-n="' + esc(n) + '"][data-f="inputValue"]');
+  if (inp) { inp.placeholder = sel.value === 'daily' ? '日薪' : '月薪'; recalc(n); updTotals(); renderFin(); } saveMonth();
 }
 function updTotals() {
-  const d = state.data; if (!d) return; let tb = 0, tm = 0, ta = 0;
-  for (const emp of d.employees) { const s = gs(emp.name); if (s.basePay !== null) tb += s.basePay; tm += s.midDeduct || 0; if (s.actualPay !== null) ta += s.actualPay; }
-  const cells = document.querySelectorAll('table.sal tbody tr.tot td'); if (cells.length >= 3) { cells[0].textContent = '¥' + tb.toFixed(2); cells[1].textContent = '¥' + tm.toFixed(2); cells[2].textContent = '¥' + ta.toFixed(2); }
+  var d = state.data; if (!d) return; var tb = 0, tm = 0, ta = 0;
+  for (var i = 0; i < d.employees.length; i++) { var s = gs(d.employees[i].name); if (s.basePay !== null) tb += s.basePay; tm += s.midDeduct || 0; if (s.actualPay !== null) ta += s.actualPay; }
+  var cells = document.querySelectorAll('table.sal tbody tr.tot td'); if (cells.length >= 3) { cells[0].textContent = '¥' + tb.toFixed(2); cells[1].textContent = '¥' + tm.toFixed(2); cells[2].textContent = '¥' + ta.toFixed(2); }
 }
-function onRestChange() { if (!state.data) return; state.data.restDays = +document.getElementById('restDays').value || 2;
-  const ed = state.data.totalDays - state.data.restDays;
-  for (const emp of state.data.employees) { const s = gs(emp.name); const bp = calcBase(s.mode || 'monthly', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, ed); const ap = calcActual(bp, s.midDeduct || 0); ss(emp.name, { basePay: bp, actualPay: ap, expectedDays: ed }); }
+function onRestChange() { if (!state.data) return; state.data.restDays = parseInt(document.getElementById('restDays').value) || 2;
+  var ed = state.data.totalDays - state.data.restDays;
+  for (var i = 0; i < state.data.employees.length; i++) { var emp = state.data.employees[i], s = gs(emp.name); var bp = calcBase(s.mode || 'monthly', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, ed); var ap = calcActual(bp, s.midDeduct || 0); ss(emp.name, { basePay: bp, actualPay: ap, expectedDays: ed }); }
   saveMonth(); renderAll(); }
 
 // ── Employees ──
 function showAddEmp() { document.getElementById('addEmpModal').classList.add('show'); document.getElementById('newName').value = ''; document.getElementById('newDept').value = ''; document.getElementById('newName').focus(); }
 function closeAddEmp() { document.getElementById('addEmpModal').classList.remove('show'); }
-function addEmployee() { const name = document.getElementById('newName').value.trim(); if (!name) return alert('请输入姓名');
-  const dept = document.getElementById('newDept').value.trim(); const d = state.data; if (d.employees.find(e => e.name === name)) return alert('已存在');
-  const emp = makeEmpty(name, dept, d.totalDays); emp.isManual = true; d.employees.push(emp);
-  d.salary[name] = defSalary(d.totalDays - (d.restDays || 2)); if (!d.manual) d.manual = []; d.manual.push({ name, dept });
+function addEmployee() { var name = document.getElementById('newName').value.trim(); if (!name) return alert('请输入姓名');
+  var dept = document.getElementById('newDept').value.trim(), d = state.data;
+  for (var i = 0; i < d.employees.length; i++) { if (d.employees[i].name === name) return alert('已存在'); }
+  var emp = makeEmpty(name, dept, d.totalDays); emp.isManual = true; d.employees.push(emp);
+  d.salary[name] = defSalary(d.totalDays - (d.restDays || 2)); if (!d.manual) d.manual = []; d.manual.push({ name: name, dept: dept });
   closeAddEmp(); saveMonth(); renderAll(); }
-function removeEmp(name) { if (!confirm(`移除「${name}」？`)) return;
-  const d = state.data; d.employees = d.employees.filter(e => e.name !== name); delete d.salary[name];
-  if (d.manual) d.manual = d.manual.filter(e => e.name !== name); saveMonth(); renderAll(); }
+function removeEmp(name) { if (!confirm('移除「' + name + '」？')) return;
+  var d = state.data, newEmps = []; for (var i = 0; i < d.employees.length; i++) { if (d.employees[i].name !== name) newEmps.push(d.employees[i]); }
+  d.employees = newEmps; delete d.salary[name];
+  if (d.manual) { var newMan = []; for (var j = 0; j < d.manual.length; j++) { if (d.manual[j].name !== name) newMan.push(d.manual[j]); } d.manual = newMan; }
+  saveMonth(); renderAll(); }
 
 // ── Expenses ──
-function renderExp() { const d = state.data; if (!d) return; const tbl = document.getElementById('expTbl'); const exps = d.expenses || [];
-  let h = '<thead><tr><th>项目</th><th>金额</th><th></th></tr></thead><tbody>'; let total = 0;
-  for (const ex of exps) { total += ex.amount || 0;
-    h += `<tr><td><input class="ei" type="text" value="${esc(ex.name || '')}" data-id="${ex.id}" data-field="name" onchange="onExpC(this)" placeholder="支出项目"></td><td><input type="number" step="0.01" value="${ex.amount || ''}" data-id="${ex.id}" data-field="amount" onchange="onExpC(this)" placeholder="金额"></td><td><button class="btn btn-r btn-sm" onclick="delExp('${ex.id}')">✕</button></td></tr>`; }
-  h += exps.length ? `<tr style="font-weight:700;background:#f8fafc"><td>合计</td><td>¥${total.toFixed(2)}</td><td></td></tr>` : '<tr><td colspan="3" style="color:#94a3b8;padding:12px">暂无其他支出</td></tr>';
+function renderExp() { var d = state.data; if (!d) return; var tbl = document.getElementById('expTbl'), exps = d.expenses || [];
+  var h = '<thead><tr><th>项目</th><th>金额</th><th></th></tr></thead><tbody>'; var total = 0;
+  for (var i = 0; i < exps.length; i++) { var ex = exps[i]; total += ex.amount || 0;
+    h += '<tr><td><input class="ei" type="text" value="' + esc(ex.name || '') + '" data-id="' + ex.id + '" data-f="name" onchange="onExpC(this)" placeholder="支出项目"></td><td><input type="number" step="0.01" value="' + (ex.amount || '') + '" data-id="' + ex.id + '" data-f="amount" onchange="onExpC(this)" placeholder="金额"></td><td><button class="btn btn-r btn-sm" onclick="delExp(\'' + ex.id + '\')">✕</button></td></tr>'; }
+  h += exps.length ? '<tr style="font-weight:700;background:#f8fafc"><td>合计</td><td>¥' + total.toFixed(2) + '</td><td></td></tr>' : '<tr><td colspan="3" style="color:#94a3b8;padding:12px">暂无其他支出</td></tr>';
   h += '</tbody>'; tbl.innerHTML = h; }
-function addExpense() { const d = state.data; if (!d.expenses) d.expenses = []; d.expenses.push({ id: ++expId, name: '', amount: 0 }); saveMonth(); renderExp(); renderFin(); }
-function delExp(id) { const d = state.data; if (!d.expenses) return; d.expenses = d.expenses.filter(e => e.id != id); saveMonth(); renderExp(); renderFin(); }
-function onExpC(inp) { const d = state.data; if (!d.expenses) return; const ex = d.expenses.find(e => e.id == inp.dataset.id); if (!ex) return;
-  if (inp.dataset.field === 'name') ex.name = inp.value.trim(); else ex.amount = inp.value.trim() === '' ? 0 : (+inp.value || 0);
+function addExpense() { var d = state.data; if (!d.expenses) d.expenses = []; d.expenses.push({ id: ++expId, name: '', amount: 0 }); saveMonth(); renderExp(); renderFin(); }
+function delExp(id) { var d = state.data; if (!d.expenses) return; var newExps = []; for (var i = 0; i < d.expenses.length; i++) { if (d.expenses[i].id != id) newExps.push(d.expenses[i]); } d.expenses = newExps; saveMonth(); renderExp(); renderFin(); }
+function onExpC(inp) { var d = state.data; if (!d.expenses) return; var ex = null; for (var i = 0; i < d.expenses.length; i++) { if (d.expenses[i].id == inp.getAttribute('data-id')) { ex = d.expenses[i]; break; } } if (!ex) return;
+  if (inp.getAttribute('data-f') === 'name') ex.name = inp.value.trim(); else ex.amount = inp.value.trim() === '' ? 0 : (Number(inp.value) || 0);
   saveMonth(); renderExp(); renderFin(); }
 
 // ── Finance ──
-function renderFin() { const d = state.data; if (!d) return; if (!d.finance) d.finance = {};
-  let st = 0, mt = 0; for (const emp of d.employees) { const s = gs(emp.name); if (s.actualPay !== null) st += s.actualPay; mt += s.midDeduct || 0; }
-  let et = 0; for (const ex of (d.expenses || [])) et += ex.amount || 0;
-  const ti = d.finance.transferIn !== undefined ? d.finance.transferIn : ''; const bp = d.finance.balancePrev || 0;
-  const gt = st + mt + et + bp; const bm = (+ti || 0) - gt;
-  d.finance.transferIn = ti; d.finance.balancePrev = bp; d.finance.balanceMonth = +bm.toFixed(2);
+function renderFin() { var d = state.data; if (!d) return; if (!d.finance) d.finance = {};
+  var st = 0, mt = 0; for (var i = 0; i < d.employees.length; i++) { var s = gs(d.employees[i].name); if (s.actualPay !== null) st += s.actualPay; mt += s.midDeduct || 0; }
+  var et = 0; for (var j = 0; j < (d.expenses || []).length; j++) et += d.expenses[j].amount || 0;
+  var ti = d.finance.transferIn !== undefined ? d.finance.transferIn : '', bp2 = d.finance.balancePrev || 0;
+  // 正确公式：本月总计 = 实发合计 + 上月结余 + 其他支出（不含月中支出，因为实发已扣除）
+  // 实发 = 应发 - 月中支出，所以不用再加月中支出
+  var gt = st + bp2 + et;
+  var bm = (Number(ti) || 0) - gt;
+  d.finance.transferIn = ti; d.finance.balancePrev = bp2; d.finance.balanceMonth = Math.round(bm * 100) / 100;
   document.getElementById('finTotal').textContent = '¥' + gt.toFixed(2);
-  document.getElementById('finSub').innerHTML = `<span>实发 <b>${st.toFixed(2)}</b></span><span class="sep">+</span><span>月中扣 <b style="color:#fca5a5">${mt.toFixed(2)}</b></span><span class="sep">+</span><span>其他 <b>${et.toFixed(2)}</b></span><span class="sep">+</span><span>上月结余 <b>${bp.toFixed(2)}</b></span>`;
+  // 本月总计 = 实发 + 上月结余 + 其他支出
+  document.getElementById('finSub').innerHTML = '<span>实发 <b>' + st.toFixed(2) + '</b></span><span class="sep">+</span><span>上月结余 <b>' + bp2.toFixed(2) + '</b></span><span class="sep">+</span><span>其他支出 <b>' + et.toFixed(2) + '</b></span>';
   document.getElementById('finTransferIn').value = ti !== '' ? ti : '';
-  document.getElementById('finBalancePrev').value = bp !== '' ? bp : '';
-  const re = document.getElementById('finResult'), rv = document.getElementById('finRemaining');
+  document.getElementById('finBalancePrev').value = bp2 !== '' ? bp2 : '';
+  var re = document.getElementById('finResult'), rv = document.getElementById('finRemaining');
   rv.textContent = (d.finance.balanceMonth >= 0 ? '+' : '') + '¥' + d.finance.balanceMonth.toFixed(2);
-  re.className = 'fin-result ' + (d.finance.balanceMonth >= 0 ? 'pos' : 'neg');
-  saveMonth(); }
-function onFinChange() { const d = state.data; if (!d || !d.finance) return;
-  d.finance.transferIn = document.getElementById('finTransferIn').value.trim() === '' ? '' : (+document.getElementById('finTransferIn').value || 0);
-  d.finance.balancePrev = document.getElementById('finBalancePrev').value.trim() === '' ? 0 : (+document.getElementById('finBalancePrev').value || 0);
+  re.className = 'fin-result ' + (d.finance.balanceMonth >= 0 ? 'pos' : 'neg'); saveMonth(); }
+function onFinChange() { var d = state.data; if (!d || !d.finance) return;
+  d.finance.transferIn = document.getElementById('finTransferIn').value.trim() === '' ? '' : (Number(document.getElementById('finTransferIn').value) || 0);
+  d.finance.balancePrev = document.getElementById('finBalancePrev').value.trim() === '' ? 0 : (Number(document.getElementById('finBalancePrev').value) || 0);
   renderFin(); }
 
 // ── Export ──
-function exportXlsx() { const d = state.data; if (!d) return alert('请先加载打卡记录');
-  const ar = [['姓名'].concat(Array.from({length:d.totalDays},(_,i)=>`${i+1}`)).concat(['出勤天数'])];
-  ar.push([''].concat(Array.from({length:d.totalDays},(_,i)=>dow(d.year,d.month,i+1))).concat(['']));
-  for (const emp of d.employees) ar.push([emp.name].concat(emp.dailyDetail.map(dd=>dd.weight===1?'1':dd.weight===0.5?'0.5':'-')).concat([emp.totalWorkingDays]));
-  const sr = [['姓名','部门','计算方式','日薪/月薪','出勤天数','应出勤天数','应发工资','月中支出','实发工资','备注']];
-  for (const emp of d.employees) { const s = gs(emp.name); sr.push([emp.name,emp.department,s.mode==='daily'?'日薪':'月薪',s.inputValue!==undefined?s.inputValue:'',emp.totalWorkingDays,d.totalDays-(d.restDays||2),s.basePay!==null?s.basePay:'',s.midDeduct||0,s.actualPay!==null?s.actualPay:'',s.note||'']); }
-  const fr = [['其他支出'],['项目','金额']]; for (const ex of (d.expenses||[])) fr.push([ex.name,ex.amount]);
-  let et=0; for (const ex of (d.expenses||[])) et+=ex.amount||0; fr.push(['支出合计',et]); fr.push([]); fr.push(['财务汇总']);
-  let st2=0,mt2=0; for (const emp of d.employees){const s=gs(emp.name);if(s.actualPay!==null)st2+=s.actualPay;mt2+=s.midDeduct||0;}
-  fr.push(['本月总计',st2+mt2+et+((d.finance||{}).balancePrev||0)]); fr.push(['本月实际转入',(d.finance||{}).transferIn||0]); fr.push(['上月结余',(d.finance||{}).balancePrev||0]); fr.push(['本月剩余',(d.finance||{}).balanceMonth||0]);
-  const wb = XLSX.utils.book_new();
-  const ws1 = XLSX.utils.aoa_to_sheet(ar); ws1['!cols']=[{wch:10}].concat(Array(d.totalDays).fill({wch:8})).concat([{wch:10}]); XLSX.utils.book_append_sheet(wb,ws1,'打卡汇总');
-  const ws2 = XLSX.utils.aoa_to_sheet(sr); ws2['!cols']=[{wch:10},{wch:14},{wch:8},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:12},{wch:10}]; XLSX.utils.book_append_sheet(wb,ws2,'工资计算');
-  const ws3 = XLSX.utils.aoa_to_sheet(fr); ws3['!cols']=[{wch:20},{wch:14}]; XLSX.utils.book_append_sheet(wb,ws3,'支出与汇总');
-  XLSX.writeFile(wb,`工资计算_${d.year}年${d.month}月.xlsx`); }
+function exportXlsx() { var d = state.data; if (!d) return alert('请先加载打卡记录');
+  var ar = [['姓名'].concat(Array.from({length: d.totalDays}, function(_, i) { return String(i + 1); })).concat(['出勤天数'])];
+  ar.push([''].concat(Array.from({length: d.totalDays}, function(_, i) { return dow(d.year, d.month, i + 1); })).concat(['']));
+  for (var ei = 0; ei < d.employees.length; ei++) { var emp = d.employees[ei]; ar.push([emp.name].concat(emp.dailyDetail.map(function(dd) { return dd.weight === 1 ? '1' : dd.weight === 0.5 ? '0.5' : '-'; })).concat([emp.totalWorkingDays])); }
+  var sr = [['姓名','部门','计算方式','日薪/月薪','出勤天数','应出勤天数','应发工资','月中支出','实发工资','备注']];
+  for (var si = 0; si < d.employees.length; si++) { var emp2 = d.employees[si], s2 = gs(emp2.name); sr.push([emp2.name, emp2.department, s2.mode === 'daily' ? '日薪' : '月薪', s2.inputValue !== undefined ? s2.inputValue : '', emp2.totalWorkingDays, d.totalDays - (d.restDays || 2), s2.basePay !== null ? s2.basePay : '', s2.midDeduct || 0, s2.actualPay !== null ? s2.actualPay : '', s2.note || '']); }
+  var fr = [['其他支出'], ['项目', '金额']];
+  for (var ei2 = 0; ei2 < (d.expenses || []).length; ei2++) fr.push([d.expenses[ei2].name, d.expenses[ei2].amount]);
+  var et2 = 0; for (var ei3 = 0; ei3 < (d.expenses || []).length; ei3++) et2 += d.expenses[ei3].amount || 0; fr.push(['支出合计', et2]); fr.push([]); fr.push(['财务汇总']);
+  var st3 = 0, mt3 = 0; for (var ei4 = 0; ei4 < d.employees.length; ei4++) { var s3 = gs(d.employees[ei4].name); if (s3.actualPay !== null) st3 += s3.actualPay; mt3 += s3.midDeduct || 0; }
+  fr.push(['本月总计', st3 + et2 + ((d.finance || {}).balancePrev || 0)]); fr.push(['本月实际转入', (d.finance || {}).transferIn || 0]); fr.push(['上月结余', (d.finance || {}).balancePrev || 0]); fr.push(['本月剩余', (d.finance || {}).balanceMonth || 0]);
+  var wb = XLSX.utils.book_new();
+  var ws1 = XLSX.utils.aoa_to_sheet(ar); ws1['!cols'] = [{wch: 10}].concat(Array(d.totalDays).fill({wch: 8})).concat([{wch: 10}]); XLSX.utils.book_append_sheet(wb, ws1, '打卡汇总');
+  var ws2 = XLSX.utils.aoa_to_sheet(sr); ws2['!cols'] = [{wch: 10},{wch: 14},{wch: 8},{wch: 12},{wch: 8},{wch: 8},{wch: 12},{wch: 10},{wch: 12},{wch: 10}]; XLSX.utils.book_append_sheet(wb, ws2, '工资计算');
+  var ws3 = XLSX.utils.aoa_to_sheet(fr); ws3['!cols'] = [{wch: 20},{wch: 14}]; XLSX.utils.book_append_sheet(wb, ws3, '支出与汇总');
+  XLSX.writeFile(wb, '工资计算_' + d.year + '年' + d.month + '月.xlsx'); }
 
 // ── Init ──
 (function() {
-  const all = load(); const months = Object.keys(all.months).sort();
-  if (months.length > 0) { const last = months[months.length - 1]; state.month = last; state.data = all.months[last];
+  var all = load(), months = Object.keys(all.months).sort();
+  if (months.length > 0) { var last = months[months.length - 1]; state.month = last; state.data = all.months[last];
     document.getElementById('dropzone').style.display = 'none'; document.getElementById('filebar').classList.add('show');
     document.getElementById('fname').textContent = state.data.fileName || '(未知文件)'; document.getElementById('restDays').value = state.data.restDays || 2;
     renderTabs(); renderAll(); }
