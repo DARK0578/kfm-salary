@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工资计算器</title>
+<script src="xlsx.full.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+.app { max-width: 100%; margin: 0 auto; padding: 10px; }
+
+.header { background: #fff; border-radius: 8px; padding: 12px 20px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.header h1 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+.header .subtitle { font-size: 12px; color: #999; }
+
+.drop-zone { border: 2px dashed #d0d5dd; border-radius: 8px; padding: 20px; text-align: center; background: #fafbfc; cursor: pointer; transition: all .2s; margin-bottom: 10px; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: #4f46e5; background: #eef0ff; }
+.drop-zone .icon { font-size: 28px; margin-bottom: 4px; }
+.drop-zone .text { font-size: 13px; color: #666; }
+.drop-zone .hint { font-size: 11px; color: #999; margin-top: 3px; }
+.drop-zone input { display: none; }
+
+/* Month Tabs */
+.month-tabs { display: none; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+.month-tabs.show { display: flex; }
+.month-tab { padding: 5px 14px; border: 1px solid #d0d5dd; border-radius: 6px; background: #fff; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap; transition: all .15s; }
+.month-tab:hover { border-color: #4f46e5; background: #eef0ff; }
+.month-tab.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.month-tab .del { margin-left: 4px; opacity: .6; font-size: 10px; }
+.month-tab .del:hover { opacity: 1; }
+
+/* File bar */
+.file-bar { display: none; align-items: center; gap: 8px; padding: 6px 14px; background: #eef2ff; border-radius: 6px; margin-bottom: 10px; font-size: 12px; }
+.file-bar.show { display: flex; }
+.file-bar .file-name { font-weight: 600; flex: 1; }
+.file-bar .btn-reset { padding: 3px 10px; border: 1px solid #d0d5dd; border-radius: 4px; background: #fff; cursor: pointer; font-size: 11px; }
+
+.section { background: #fff; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.06); display: none; }
+.section.show { display: block; }
+.section h2 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; border-bottom: 2px solid #4f46e5; padding-bottom: 4px; display: inline-block; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Toggle buttons */
+.toggle-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.toggle-btn { padding: 4px 12px; border: 1px solid #d0d5dd; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; font-weight: 600; transition: all .15s; }
+.toggle-btn:hover { border-color: #4f46e5; }
+.toggle-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+
+/* Config row */
+.config-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding: 6px 12px; background: #f9fafb; border-radius: 6px; flex-wrap: wrap; }
+.config-row label { font-size: 12px; font-weight: 600; }
+.config-row input { width: 48px; padding: 2px 6px; border: 1px solid #d0d5dd; border-radius: 4px; font-size: 12px; text-align: center; }
+.config-row .config-info { font-size: 11px; color: #999; }
+
+/* Section header with button */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+
+/* Attendance Table — compact */
+table { border-collapse: collapse; width: 100%; font-size: 10px; }
+table.attendance th, table.attendance td { border: 1px solid #e5e7eb; padding: 2px 3px; text-align: center; white-space: nowrap; min-width: 30px; }
+table.attendance th { background: #f9fafb; font-weight: 600; position: sticky; top: 0; z-index: 1; }
+table.attendance th.name-col { min-width: 52px; position: sticky; left: 0; z-index: 2; background: #f9fafb; }
+table.attendance td.name-col { font-weight: 600; position: sticky; left: 0; z-index: 1; background: #fff; font-size: 11px; }
+table.attendance tr:nth-child(even) td.name-col { background: #fafafa; }
+table.attendance th.weekend-col { background: #fef2f2; color: #dc2626; }
+table.attendance th.summary-col { background: #eff6ff; color: #2563eb; }
+table.attendance td.full-day { background: #dcfce7; color: #16a34a; cursor: default; font-weight: 600; }
+table.attendance td.half-day { background: #fef9c3; color: #ca8a04; cursor: default; font-weight: 600; }
+table.attendance td.absent { background: #f9fafb; color: #d1d5db; }
+table.attendance tr:nth-child(even) td.absent { background: #f3f4f6; }
+table.attendance td.time-cell { background: #f0f4ff; font-size: 9px; }
+table.attendance td.summary-col { background: #eff6ff; font-weight: 700; }
+
+/* Salary Table — compact */
+table.salary { border-collapse: collapse; width: 100%; font-size: 11px; }
+table.salary th, table.salary td { border: 1px solid #e5e7eb; padding: 3px 5px; text-align: center; }
+table.salary th { background: #f9fafb; font-weight: 600; }
+table.salary td.name-cell { font-weight: 600; text-align: left; }
+table.salary select.salary-mode { padding: 2px 4px; border: 1px solid #d0d5dd; border-radius: 3px; font-size: 11px; background: #fff; cursor: pointer; }
+table.salary select.salary-mode:focus { outline: none; border-color: #4f46e5; }
+table.salary input { padding: 2px 4px; border: 1px solid #d0d5dd; border-radius: 3px; font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; width: 70px; }
+table.salary input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,.1); }
+table.salary input.days-input { width: 48px; }
+table.salary input.note-input { width: 60px; text-align: left; font-size: 10px; }
+table.salary .base-pay { font-weight: 600; color: #4f46e5; }
+table.salary .actual-pay { font-weight: 700; color: #4f46e5; font-size: 13px; }
+table.salary .total-row { background: #f0f4ff; font-weight: 700; }
+
+/* Expense Table — compact */
+table.expense { border-collapse: collapse; width: 100%; max-width: 420px; font-size: 11px; }
+table.expense th, table.expense td { border: 1px solid #e5e7eb; padding: 3px 6px; text-align: center; }
+table.expense th { background: #f9fafb; font-weight: 600; }
+table.expense input { padding: 2px 5px; border: 1px solid #d0d5dd; border-radius: 3px; font-size: 11px; text-align: right; }
+table.expense input:focus { outline: none; border-color: #4f46e5; }
+table.expense input.name-inp { text-align: left; width: 120px; }
+
+/* Finance Summary — compact */
+.finance-grid { display: grid; grid-template-columns: auto auto; gap: 4px 16px; font-size: 12px; max-width: 480px; }
+.finance-grid .label { font-weight: 600; color: #666; text-align: right; }
+.finance-grid .value { font-weight: 700; font-variant-numeric: tabular-nums; }
+.finance-grid .value.positive { color: #16a34a; }
+.finance-grid .value.negative { color: #dc2626; }
+.finance-grid input { padding: 2px 5px; border: 1px solid #d0d5dd; border-radius: 3px; font-size: 12px; text-align: right; width: 110px; }
+.finance-grid input:focus { outline: none; border-color: #4f46e5; }
+.finance-divider { border-top: 1px solid #e5e7eb; margin: 2px 0; }
+
+/* Badge */
+.badge-warning { display: inline-block; padding: 1px 5px; background: #fef3c7; color: #d97706; border-radius: 3px; font-size: 9px; font-weight: 600; margin-left: 3px; }
+.badge-manual { display: inline-block; padding: 1px 5px; background: #e0e7ff; color: #4f46e5; border-radius: 3px; font-size: 9px; font-weight: 600; margin-left: 3px; }
+
+/* Buttons */
+.btn-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.btn { padding: 5px 12px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.btn-primary { background: #4f46e5; color: #fff; }
+.btn-primary:hover { background: #4338ca; }
+.btn-outline { background: #fff; border: 1px solid #d0d5dd; color: #374151; }
+.btn-outline:hover { background: #f9fafb; border-color: #9ca3af; }
+.btn-danger { background: #fff; border: 1px solid #fecaca; color: #dc2626; }
+.btn-danger:hover { background: #fef2f2; }
+.btn-sm { padding: 2px 8px; font-size: 10px; border-radius: 3px; }
+.btn-green { background: #16a34a; color: #fff; }
+.btn-green:hover { background: #15803d; }
+
+.summary-line { margin-top: 6px; font-size: 11px; color: #666; }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.4); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; border-radius: 12px; padding: 24px 28px; min-width: 350px; box-shadow: 0 10px 40px rgba(0,0,0,.15); }
+.modal h3 { font-size: 16px; margin-bottom: 16px; }
+.modal label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; margin-top: 10px; }
+.modal input { width: 100%; padding: 8px 12px; border: 1px solid #d0d5dd; border-radius: 6px; font-size: 14px; }
+.modal input:focus { outline: none; border-color: #4f46e5; }
+.modal .btn-row { margin-top: 16px; }
+
+/* Print */
+@media print {
+  body { background: #fff; }
+  .app { max-width: none; padding: 0; }
+  .header, .drop-zone, .file-bar, .btn-row, .config-row, #dropZone, .month-tabs, .toggle-row, .section-header { display: none !important; }
+  .section { box-shadow: none; border-radius: 0; padding: 6px 0; margin-bottom: 10px; display: block !important; page-break-inside: avoid; }
+  .section h2 { font-size: 14px; }
+  table { font-size: 10px; }
+  table.attendance th, table.attendance td { padding: 2px 4px; min-width: 34px; }
+  table.salary input, table.expense input, .finance-grid input { border: none; background: none; -webkit-appearance: none; width: auto; }
+  @page { size: A3 landscape; margin: 10mm; }
+}
+
+@media (max-width: 768px) {
+  .app { padding: 4px; }
+  .section { padding: 8px 6px; border-radius: 6px; }
+  .header { padding: 8px 10px; border-radius: 6px; }
+  .header h1 { font-size: 15px; }
+  .header .subtitle { font-size: 10px; }
+  .drop-zone { padding: 16px; }
+  .drop-zone .icon { font-size: 24px; }
+  .drop-zone .text { font-size: 12px; }
+  table.attendance th, table.attendance td { padding: 1px 2px; min-width: 22px; font-size: 9px; }
+  table.salary { font-size: 10px; }
+  table.salary th, table.salary td { padding: 2px 3px; }
+  table.salary input { width: 50px; font-size: 10px; }
+  table.salary input.days-input { width: 38px; }
+  .btn { padding: 4px 8px; font-size: 11px; }
+  .month-tab { padding: 4px 10px; font-size: 11px; }
+  .toggle-btn { padding: 3px 8px; font-size: 11px; }
+}
+/* Touch-friendly inputs */
+@media (pointer: coarse) {
+  input, select, button { min-height: 28px; }
+  table.salary input, table.expense input, .finance-grid input { min-height: 24px; }
+}
+/* Also add viewport scaling fix */
+@viewport { width: device-width; zoom: 1; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>💰 工资计算器</h1>
+    <div class="subtitle">拖入钉钉打卡记录 xlsx → 打卡汇总 + 工资明细 · 半天判定 · 其他支出 · 财务汇总</div>
+  </div>
+
+  <!-- Drop zone -->
+  <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+    <div class="icon">📂</div>
+    <div class="text">点击选择文件 或 拖拽 xlsx 文件到此处</div>
+    <div class="hint">支持钉钉导出的打卡时间报表 (.xlsx) · 新月份自动创建Tab</div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
+  </div>
+
+  <!-- File bar -->
+  <div class="file-bar" id="fileBar">
+    <span>📄</span> <span class="file-name" id="fileName"></span>
+    <button class="btn-reset" onclick="resetUpload()">重新上传</button>
+  </div>
+
+  <!-- Month Tabs -->
+  <div class="month-tabs" id="monthTabs"></div>
+
+  <!-- Error -->
+  <div class="section" id="errorSection"><div style="color:#dc2626;font-weight:600" id="errorMsg"></div></div>
+
+  <!-- Attendance -->
+  <div class="section" id="attendanceSection">
+    <h2>📋 打卡记录汇总</h2>
+    <div class="toggle-row">
+      <button class="toggle-btn active" id="btnDayView" onclick="setAttView('day')">📊 出勤天数</button>
+      <button class="toggle-btn" id="btnTimeView" onclick="setAttView('time')">🕐 打卡时间</button>
+    </div>
+    <div class="table-wrap"><table class="attendance" id="attendanceTable"></table></div>
+    <div class="summary-line" id="attendanceSummary"></div>
+  </div>
+
+  <!-- Salary -->
+  <div class="section" id="salarySection">
+    <div class="section-header">
+      <h2 style="margin-bottom:0;border-bottom:none;padding-bottom:0">🧮 工资计算</h2>
+      <button class="btn btn-sm btn-green" onclick="showAddEmployeeModal()">+ 新增人员</button>
+    </div>
+    <div class="config-row">
+      <label>固定休息日：</label>
+      <input type="number" id="restDays" value="2" min="0" max="31" onchange="onRestDaysChange()">
+      <span class="config-info">应出勤 = 当月天数 − 休息日 · 半天 &lt; 5h = 0.5天</span>
+    </div>
+    <div class="table-wrap"><table class="salary" id="salaryTable"></table></div>
+    <div class="summary-line" id="salarySummary"></div>
+  </div>
+
+  <!-- Expenses -->
+  <div class="section" id="expenseSection">
+    <div class="section-header">
+      <h2 style="margin-bottom:0;border-bottom:none;padding-bottom:0">💸 其他支出</h2>
+      <button class="btn btn-sm btn-green" onclick="addExpense()">+ 添加支出</button>
+    </div>
+    <div class="table-wrap"><table class="expense" id="expenseTable"></table></div>
+  </div>
+
+  <!-- Finance Summary -->
+  <div class="section" id="financeSection">
+    <h2>📊 财务汇总</h2>
+    <div class="finance-grid">
+      <span class="label">工资合计：</span><span class="value" id="finSalaryTotal">¥0.00</span>
+      <span class="label">其他支出合计：</span><span class="value" id="finExpenseTotal">¥0.00</span>
+      <span class="label">本月实际转入：</span><span><input type="number" step="0.01" id="finTransferIn" onchange="onFinanceChange()" placeholder="财务打款金额"></span>
+      <span class="label">上月总结余：</span><span><input type="number" step="0.01" id="finBalancePrev" onchange="onFinanceChange()" placeholder="上月结余（可负）"></span>
+      <div></div><div class="finance-divider"></div>
+      <span class="label" style="font-size:14px">本月结余：</span><span class="value" id="finBalanceMonth" style="font-size:18px">¥0.00</span>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-row" id="exportBtns">
+    <button class="btn btn-primary" onclick="exportXlsx()">📥 导出 Excel</button>
+    <button class="btn btn-outline" onclick="window.print()">🖨️ 打印 / 导出 PDF</button>
+    <button class="btn btn-danger" onclick="deleteCurrentMonth()">🗑️ 删除当前月份</button>
+  </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="modal-overlay" id="addEmpModal">
+  <div class="modal">
+    <h3>新增人员</h3>
+    <label>姓名</label>
+    <input type="text" id="newEmpName" placeholder="输入姓名">
+    <label>部门</label>
+    <input type="text" id="newEmpDept" placeholder="输入部门（可选）">
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="addEmployee()">确定</button>
+      <button class="btn btn-outline" onclick="closeAddEmployeeModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// Constants & state
+// ═══════════════════════════════════════════
+const STORAGE_KEY = 'kfm_payroll_v4';
+const HALF_DAY_HOURS = 5;
+
+let appState = {
+  activeMonth: null,
+  currentData: null,
+  attView: 'day'   // 'day' | 'time'
+};
+
+function attViewClass() { return appState.attView; }
+
+// ═══════════════════════════════════════════
+// Persistence
+// ═══════════════════════════════════════════
+function loadAllData() {
+  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : { employees: {}, months: {} }; }
+  catch { return { employees: {}, months: {} }; }
+}
+function saveAllData(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+}
+function saveCurrentMonth() {
+  const data = loadAllData();
+  if (appState.currentData) { data.months[appState.activeMonth] = appState.currentData; saveAllData(data); }
+}
+
+// ═══════════════════════════════════════════
+// Time helpers
+// ═══════════════════════════════════════════
+function timeToMinutes(t) {
+  const p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+function calcDayWeight(times) {
+  if (!times || times.length === 0) return { weight: 0, hours: 0 };
+  const mins = times.map(timeToMinutes);
+  const hours = (Math.max(...mins) - Math.min(...mins)) / 60;
+  if (hours >= HALF_DAY_HOURS) return { weight: 1, hours: Math.round(hours * 10) / 10 };
+  if (hours > 0) return { weight: 0.5, hours: Math.round(hours * 10) / 10 };
+  return { weight: 0, hours: 0 };
+}
+function formatHours(h) {
+  const hr = Math.floor(h), mn = Math.round((h - hr) * 60);
+  return mn > 0 ? `${hr}h${mn}m` : `${hr}h`;
+}
+
+// ═══════════════════════════════════════════
+// Day helpers
+// ═══════════════════════════════════════════
+function getDayOfWeek(year, month, day) {
+  return ['日','一','二','三','四','五','六'][new Date(year, month - 1, day).getDay()];
+}
+function isWeekend(year, month, day) {
+  const d = new Date(year, month - 1, day).getDay();
+  return d === 0 || d === 6;
+}
+
+// ═══════════════════════════════════════════
+// File handling
+// ═══════════════════════════════════════════
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0]; if (f) processFile(f);
+});
+function handleFile(event) { const f = event.target.files[0]; if (f) processFile(f); }
+function resetUpload() {
+  document.getElementById('fileBar').classList.remove('show');
+  document.getElementById('dropZone').style.display = '';
+  document.getElementById('fileInput').value = '';
+}
+
+// ═══════════════════════════════════════════
+// XLSX Processing
+// ═══════════════════════════════════════════
+function processFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type: 'array' });
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
+      const parsed = parseAttendance(rows, file.name);
+      const monthKey = `${parsed.year}-${String(parsed.month).padStart(2, '0')}`;
+
+      const allData = loadAllData();
+      const existing = allData.months[monthKey];
+
+      // Merge: keep manually added employees from existing data
+      if (existing && existing.manualEmployees) {
+        for (const me of existing.manualEmployees) {
+          if (!parsed.employees.find(e => e.name === me.name)) {
+            parsed.employees.push(makeEmptyEmployee(me.name, me.department, parsed.totalDays));
+            parsed.salary[me.name] = existing.salary[me.name] || makeDefaultSalary(parsed.totalDays - parsed.restDays);
+          }
+        }
+        parsed.manualEmployees = existing.manualEmployees;
+      }
+
+      // Keep existing finance/expenses
+      if (existing) {
+        parsed.expenses = existing.expenses || [];
+        parsed.finance = existing.finance || {};
+        parsed.restDays = existing.restDays !== undefined ? existing.restDays : parsed.restDays;
+      }
+
+      // Restore employee configs from global store
+      for (const emp of parsed.employees) {
+        const saved = (allData.employees || {})[emp.name] || {};
+        if (!parsed.salary[emp.name]) {
+          parsed.salary[emp.name] = makeDefaultSalary(parsed.totalDays - parsed.restDays);
+        }
+        parsed.salary[emp.name].mode = saved.mode || parsed.salary[emp.name].mode || 'monthly';
+        parsed.salary[emp.name].inputValue = saved.value !== undefined ? saved.value : (parsed.salary[emp.name].inputValue || '');
+      }
+
+      appState.activeMonth = monthKey;
+      appState.currentData = parsed;
+      allData.months[monthKey] = parsed;
+      saveAllData(allData);
+
+      document.getElementById('fileBar').classList.add('show');
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('dropZone').style.display = 'none';
+      document.getElementById('errorSection').classList.remove('show');
+      document.getElementById('restDays').value = parsed.restDays || 2;
+
+      renderMonthTabs();
+      renderAll();
+    } catch (err) {
+      console.error(err);
+      document.getElementById('errorSection').classList.add('show');
+      document.getElementById('errorMsg').textContent = '❌ 文件解析失败：' + err.message;
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseAttendance(rows, fileName) {
+  const titleStr = String(rows[0][0] || '');
+  const m = titleStr.match(/(\d{4})-(\d{2})-(\d{2})\s*至\s*(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) throw new Error('无法从标题提取日期范围');
+
+  const year = parseInt(m[1]), month = parseInt(m[2]), totalDays = parseInt(m[6]);
+  const allData = loadAllData();
+  const monthKey = `${year}-${String(month).padStart(2, '0')}`;
+  const existing = allData.months[monthKey];
+
+  const employees = [];
+  for (let i = 4; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || !row[0]) continue;
+    const name = String(row[0]).trim();
+    if (!name) continue;
+    employees.push(buildEmployeeFromRow(name, String(row[1] || '').trim(), String(row[5] || '').trim(), row, totalDays));
+  }
+
+  const restDays = existing ? existing.restDays : 2;
+
+  // Build salary
+  const salary = {};
+  const storedEmployees = allData.employees || {};
+  const prevMonthKey = getPrevMonthKey(year, month);
+  const prevMonth = allData.months[prevMonthKey];
+
+  for (const emp of employees) {
+    const saved = storedEmployees[emp.name] || {};
+    const mode = saved.mode || 'monthly';
+    const inputValue = saved.value !== undefined ? saved.value : '';
+
+    let balancePrev = 0;
+    if (existing && existing.salary && existing.salary[emp.name]) {
+      balancePrev = existing.salary[emp.name].balancePrev || 0;
+    } else if (prevMonth && prevMonth.salary && prevMonth.salary[emp.name]) {
+      balancePrev = prevMonth.salary[emp.name].balanceNext || 0;
+    }
+
+    const expectedDays = totalDays - restDays;
+    const basePay = calcBasePay(mode, inputValue, emp.totalWorkingDays, expectedDays);
+    const actualPay = calcActualPay(basePay, balancePrev);
+
+    salary[emp.name] = { mode, inputValue, workingDays: emp.totalWorkingDays, expectedDays, basePay, balancePrev, balanceNext: 0, actualPay, note: '' };
+
+    // Carry over note from existing
+    if (existing && existing.salary && existing.salary[emp.name]) {
+      salary[emp.name].note = existing.salary[emp.name].note || '';
+    }
+  }
+
+  // Carry over finance
+  let finance = {};
+  if (existing && existing.finance) {
+    finance = { ...existing.finance };
+  }
+  if (prevMonth && prevMonth.finance && finance.balancePrev === undefined) {
+    finance.balancePrev = prevMonth.finance.balanceMonth || 0;
+  }
+
+  // Expenses
+  let expenses = existing ? (existing.expenses || []) : [];
+
+  return {
+    fileName, year, month, totalDays, restDays,
+    employees, salary, expenses, finance,
+    manualEmployees: existing ? (existing.manualEmployees || []) : []
+  };
+}
+
+function buildEmployeeFromRow(name, department, userId, row, totalDays) {
+  const dailyDetail = [];
+  let totalWorkingDays = 0;
+  for (let d = 0; d < totalDays; d++) {
+    const raw = String(row[6 + d] || '');
+    const times = parsePunchTimes(raw);
+    const { weight, hours } = calcDayWeight(times);
+    totalWorkingDays += weight;
+    dailyDetail.push({ day: d + 1, times: times || [], hours, weight });
+  }
+  return { name, department, userId, dailyDetail, totalWorkingDays: Math.round(totalWorkingDays * 10) / 10 };
+}
+
+function makeEmptyEmployee(name, department, totalDays) {
+  const dailyDetail = [];
+  for (let d = 0; d < totalDays; d++) dailyDetail.push({ day: d + 1, times: [], hours: 0, weight: 0 });
+  return { name, department, userId: '', dailyDetail, totalWorkingDays: 0, isManual: true };
+}
+
+function makeDefaultSalary(expectedDays) {
+  return { mode: 'monthly', inputValue: '', workingDays: 0, expectedDays, basePay: null, balancePrev: 0, balanceNext: 0, actualPay: null, note: '' };
+}
+
+function parsePunchTimes(raw) {
+  if (!raw || raw.trim() === '') return null;
+  const lines = raw.split(/\n|\r\n?/);
+  const times = [];
+  for (const line of lines) {
+    const m = line.trim().match(/(\d{1,2}:\d{2})/);
+    if (m) times.push(m[1]);
+  }
+  return times.length > 0 ? times : null;
+}
+
+function getPrevMonthKey(year, month) {
+  return month === 1 ? `${year - 1}-12` : `${year}-${String(month - 1).padStart(2, '0')}`;
+}
+
+// ═══════════════════════════════════════════
+// Salary calc
+// ═══════════════════════════════════════════
+function calcBasePay(mode, value, workingDays, expectedDays) {
+  if (value === '' || isNaN(parseFloat(value)) || parseFloat(value) < 0) return null;
+  const num = parseFloat(value);
+  if (mode === 'daily') return Math.round(workingDays * num * 100) / 100;
+  if (expectedDays <= 0) return 0;
+  return Math.round((workingDays / expectedDays) * num * 100) / 100;
+}
+function calcActualPay(basePay, balancePrev) {
+  if (basePay === null) return null;
+  return Math.round((basePay + (balancePrev || 0)) * 100) / 100;
+}
+
+// ═══════════════════════════════════════════
+// Month tabs
+// ═══════════════════════════════════════════
+function renderMonthTabs() {
+  const container = document.getElementById('monthTabs');
+  const allData = loadAllData();
+  const months = Object.keys(allData.months).sort();
+  if (months.length === 0) { container.classList.remove('show'); return; }
+  container.classList.add('show');
+  let html = '';
+  for (const mk of months) {
+    const d = allData.months[mk];
+    html += `<div class="month-tab${mk === appState.activeMonth ? ' active' : ''}" onclick="switchMonth('${mk}')">${d.year}年${d.month}月 <span class="del" onclick="event.stopPropagation();deleteMonth('${mk}')">✕</span></div>`;
+  }
+  container.innerHTML = html;
+}
+
+function switchMonth(monthKey) {
+  const allData = loadAllData();
+  const md = allData.months[monthKey];
+  if (!md) return;
+  appState.activeMonth = monthKey;
+  appState.currentData = md;
+  document.getElementById('dropZone').style.display = 'none';
+  document.getElementById('fileBar').classList.add('show');
+  document.getElementById('fileName').textContent = md.fileName || '(未知文件)';
+  document.getElementById('restDays').value = md.restDays || 2;
+  document.getElementById('errorSection').classList.remove('show');
+  renderMonthTabs();
+  renderAll();
+}
+
+function deleteMonth(monthKey) {
+  if (!confirm(`确定删除 ${monthKey.replace('-','年')}月 的记录？不可恢复。`)) return;
+  const allData = loadAllData();
+  delete allData.months[monthKey];
+  saveAllData(allData);
+  if (appState.activeMonth === monthKey) {
+    appState.activeMonth = null; appState.currentData = null;
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+    document.getElementById('fileBar').classList.remove('show');
+    document.getElementById('dropZone').style.display = '';
+    document.getElementById('errorSection').classList.remove('show');
+  }
+  renderMonthTabs();
+}
+function deleteCurrentMonth() { if (appState.activeMonth) deleteMonth(appState.activeMonth); }
+
+// ═══════════════════════════════════════════
+// Render all
+// ═══════════════════════════════════════════
+function renderAll() {
+  renderAttendanceTable();
+  renderSalaryTable();
+  renderExpenseTable();
+  renderFinanceSummary();
+  document.getElementById('attendanceSection').classList.add('show');
+  document.getElementById('salarySection').classList.add('show');
+  document.getElementById('expenseSection').classList.add('show');
+  document.getElementById('financeSection').classList.add('show');
+  document.getElementById('exportBtns').style.display = 'flex';
+}
+
+// ═══════════════════════════════════════════
+// Attendance table with view toggle
+// ═══════════════════════════════════════════
+function setAttView(view) {
+  appState.attView = view;
+  document.getElementById('btnDayView').classList.toggle('active', view === 'day');
+  document.getElementById('btnTimeView').classList.toggle('active', view === 'time');
+  renderAttendanceTable();
+}
+
+function renderAttendanceTable() {
+  const data = appState.currentData;
+  if (!data) return;
+  const table = document.getElementById('attendanceTable');
+  const view = attViewClass();
+  const section = document.getElementById('attendanceSection');
+  section.classList.add('show');
+
+  let html = '<thead><tr>';
+  html += '<th class="name-col" rowspan="2">姓名</th>';
+  for (let d = 1; d <= data.totalDays; d++) {
+    const wk = isWeekend(data.year, data.month, d);
+    html += `<th class="${wk ? 'weekend-col' : ''}">${d}</th>`;
+  }
+  html += '<th class="summary-col" rowspan="2">出勤天数</th>';
+  html += '</tr><tr>';
+  for (let d = 1; d <= data.totalDays; d++) {
+    const dow = getDayOfWeek(data.year, data.month, d);
+    const wk = isWeekend(data.year, data.month, d);
+    html += `<th class="${wk ? 'weekend-col' : ''}">${dow}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  for (const emp of data.employees) {
+    html += '<tr>';
+    html += `<td class="name-col">${escHtml(emp.name)}`;
+    if (emp.totalWorkingDays === 0) html += '<span class="badge-warning">无打卡</span>';
+    if (emp.isManual) html += '<span class="badge-manual">手动</span>';
+    html += '</td>';
+
+    for (const dd of emp.dailyDetail) {
+      if (view === 'day') {
+        if (dd.weight === 1) {
+          const range = dd.times.length > 0 ? `${dd.times[0]}→${dd.times[dd.times.length - 1]}` : '';
+          html += `<td class="full-day" title="${escHtml(range)} (${formatHours(dd.hours)})">1</td>`;
+        } else if (dd.weight === 0.5) {
+          const range = dd.times.length > 0 ? dd.times.join(' → ') : '';
+          html += `<td class="half-day" title="${escHtml(range)} (${formatHours(dd.hours)})">0.5</td>`;
+        } else {
+          html += '<td class="absent">·</td>';
+        }
+      } else {
+        // Time view
+        if (dd.times.length > 0) {
+          const range = `${dd.times[0]}→${dd.times[dd.times.length - 1]}`;
+          const cls = dd.weight === 0.5 ? 'half-day' : 'time-cell';
+          html += `<td class="${cls}">${escHtml(range)}</td>`;
+        } else {
+          html += '<td class="absent">·</td>';
+        }
+      }
+    }
+    html += `<td class="summary-col">${emp.totalWorkingDays}</td>`;
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// Salary table
+// ═══════════════════════════════════════════
+function renderSalaryTable() {
+  const data = appState.currentData;
+  if (!data) return;
+  const table = document.getElementById('salaryTable');
+  const expectedDays = data.totalDays - (data.restDays || 2);
+  const allData = loadAllData();
+
+  let html = '<thead><tr>';
+  html += '<th>姓名</th><th>部门</th><th>方式</th><th>日薪/月薪</th><th>出勤</th><th>应出勤</th><th>应发</th><th>上月结余</th><th>本月结余</th><th>实发</th><th>备注</th><th>操作</th>';
+  html += '</tr></thead><tbody>';
+
+  let totalBase = 0, totalBalance = 0, totalActual = 0;
+
+  for (const emp of data.employees) {
+    const sal = data.salary[emp.name] || makeDefaultSalary(expectedDays);
+    const mode = sal.mode || 'monthly';
+    const inputValue = sal.inputValue !== undefined ? sal.inputValue : '';
+    const wd = emp.totalWorkingDays;
+    const basePay = calcBasePay(mode, inputValue, wd, expectedDays);
+    const bp = sal.balancePrev || 0;
+    const bn = sal.balanceNext || 0;
+    const actualPay = calcActualPay(basePay, bp);
+    const note = sal.note || '';
+
+    // Update in data
+    data.salary[emp.name] = { mode, inputValue, workingDays: wd, expectedDays, basePay, balancePrev: bp, balanceNext: bn, actualPay, note };
+
+    if (basePay !== null) totalBase += basePay;
+    totalBalance += bp;
+    if (actualPay !== null) totalActual += actualPay;
+
+    html += '<tr>';
+    html += `<td class="name-cell">${escHtml(emp.name)}${emp.isManual ? '<span class="badge-manual">手动</span>' : ''}</td>`;
+    html += `<td>${escHtml(emp.department)}</td>`;
+    html += `<td><select class="salary-mode" data-name="${escHtml(emp.name)}" onchange="onModeChange(this)"><option value="monthly"${mode === 'monthly' ? ' selected' : ''}>月薪</option><option value="daily"${mode === 'daily' ? ' selected' : ''}>日薪</option></select></td>`;
+    html += `<td><input type="number" min="0" step="0.01" value="${escHtml(String(inputValue))}" data-name="${escHtml(emp.name)}" data-field="inputValue" placeholder="${mode === 'daily' ? '日薪' : '月薪'}" onchange="onSalaryFieldChange(this)" oninput="onSalaryFieldInput(this)"></td>`;
+    html += `<td><input class="days-input" type="number" min="0" step="0.5" value="${wd}" data-name="${escHtml(emp.name)}" data-field="workingDays" onchange="onDaysFieldChange(this)" oninput="onDaysFieldInput(this)"></td>`;
+    html += `<td><input class="days-input" type="number" min="0" step="1" value="${expectedDays}" data-name="${escHtml(emp.name)}" data-field="expectedDays" onchange="onDaysFieldChange(this)" oninput="onDaysFieldInput(this)"></td>`;
+    html += `<td class="base-pay" id="base-${cssSafe(emp.name)}">${basePay !== null ? '¥' + basePay.toFixed(2) : '-'}</td>`;
+    html += `<td><input type="number" step="0.01" value="${escHtml(String(bp))}" data-name="${escHtml(emp.name)}" data-field="balancePrev" onchange="onSalaryFieldChange(this)" oninput="onSalaryFieldInput(this)" style="width:90px"></td>`;
+    html += `<td><input type="number" step="0.01" value="${escHtml(String(bn))}" data-name="${escHtml(emp.name)}" data-field="balanceNext" onchange="onSalaryFieldChange(this)" oninput="onSalaryFieldInput(this)" style="width:90px"></td>`;
+    html += `<td class="actual-pay" id="actual-${cssSafe(emp.name)}">${actualPay !== null ? '¥' + actualPay.toFixed(2) : '-'}</td>`;
+    html += `<td><input class="note-input" type="text" value="${escHtml(note)}" data-name="${escHtml(emp.name)}" data-field="note" onchange="onSalaryFieldChange(this)" placeholder="备注"></td>`;
+    html += `<td><button class="btn btn-sm btn-danger" onclick="removeEmployee('${escHtml(emp.name)}')">移除</button></td>`;
+    html += '</tr>';
+  }
+
+  // Totals
+  html += '<tr class="total-row">';
+  html += `<td colspan="6">合计</td>`;
+  html += `<td>¥${totalBase.toFixed(2)}</td>`;
+  html += `<td>¥${totalBalance.toFixed(2)}</td>`;
+  html += `<td></td>`;
+  html += `<td>¥${totalActual.toFixed(2)}</td>`;
+  html += `<td></td><td></td>`;
+  html += '</tr>';
+  html += '</tbody>';
+  table.innerHTML = html;
+
+  saveCurrentMonth();
+}
+
+// ═══════════════════════════════════════════
+// Salary field interactions
+// ═══════════════════════════════════════════
+function getSal(name) { return (appState.currentData.salary || {})[name] || {}; }
+function setSal(name, u) {
+  if (!appState.currentData.salary) appState.currentData.salary = {};
+  if (!appState.currentData.salary[name]) appState.currentData.salary[name] = {};
+  Object.assign(appState.currentData.salary[name], u);
+}
+
+function onSalaryFieldInput(input) {
+  const name = input.dataset.name, field = input.dataset.field, val = input.value.trim();
+  const numVal = val === '' ? '' : parseFloat(val);
+  if (field === 'note') { setSal(name, { note: val }); }
+  else if (!isNaN(numVal) && numVal !== '') { setSal(name, { [field]: numVal }); }
+  else if (val === '') { setSal(name, { [field]: field === 'balancePrev' || field === 'balanceNext' ? 0 : '' }); }
+
+  recalcSal(name);
+  updateSalaryTotals();
+  renderFinanceSummary();
+}
+
+function onDaysFieldInput(input) {
+  const name = input.dataset.name, field = input.dataset.field, val = input.value.trim();
+  const numVal = val === '' ? 0 : parseFloat(val);
+  if (!isNaN(numVal)) {
+    setSal(name, { [field]: numVal });
+    if (field === 'workingDays') {
+      // Also update the employee's totalWorkingDays
+      const emp = appState.currentData.employees.find(e => e.name === name);
+      if (emp) emp.totalWorkingDays = numVal;
+    }
+  }
+  recalcSal(name);
+  updateSalaryTotals();
+  renderFinanceSummary();
+}
+
+function onDaysFieldChange(input) {
+  onDaysFieldInput(input);
+  saveCurrentMonth();
+}
+
+function recalcSal(name) {
+  const sal = getSal(name);
+  const mode = sal.mode || 'monthly';
+  const inputValue = sal.inputValue !== undefined ? sal.inputValue : '';
+  const wd = sal.workingDays !== undefined ? sal.workingDays : 0;
+  const ed = sal.expectedDays || (appState.currentData.totalDays - (appState.currentData.restDays || 2));
+  const basePay = calcBasePay(mode, inputValue, wd, ed);
+  const actualPay = calcActualPay(basePay, sal.balancePrev || 0);
+  setSal(name, { basePay, actualPay, workingDays: wd, expectedDays: ed });
+
+  const baseEl = document.getElementById('base-' + cssSafe(name));
+  const actualEl = document.getElementById('actual-' + cssSafe(name));
+  if (baseEl) baseEl.textContent = basePay !== null ? '¥' + basePay.toFixed(2) : '-';
+  if (actualEl) actualEl.textContent = actualPay !== null ? '¥' + actualPay.toFixed(2) : '-';
+}
+
+function onSalaryFieldChange(input) {
+  onSalaryFieldInput(input);
+  const name = input.dataset.name;
+  const sal = getSal(name);
+  const allData = loadAllData();
+  if (!allData.employees[name]) allData.employees[name] = {};
+  allData.employees[name].mode = sal.mode || 'monthly';
+  allData.employees[name].value = sal.inputValue !== undefined ? sal.inputValue : '';
+  saveAllData(allData);
+  saveCurrentMonth();
+}
+
+function onModeChange(select) {
+  const name = select.dataset.name;
+  setSal(name, { mode: select.value });
+  const allData = loadAllData();
+  if (!allData.employees[name]) allData.employees[name] = {};
+  allData.employees[name].mode = select.value;
+  saveAllData(allData);
+  const input = document.querySelector(`input[data-name="${escHtml(name)}"][data-field="inputValue"]`);
+  if (input) {
+    input.placeholder = select.value === 'daily' ? '日薪' : '月薪';
+    onSalaryFieldInput(input);
+  }
+  saveCurrentMonth();
+}
+
+function updateSalaryTotals() {
+  const data = appState.currentData;
+  if (!data) return;
+  let tb = 0, tbal = 0, ta = 0;
+  for (const emp of data.employees) {
+    const s = data.salary[emp.name] || {};
+    if (s.basePay !== null && s.basePay !== undefined) tb += s.basePay;
+    tbal += s.balancePrev || 0;
+    if (s.actualPay !== null && s.actualPay !== undefined) ta += s.actualPay;
+  }
+  const rows = document.querySelectorAll('table.salary tr.total-row td');
+  if (rows.length >= 4) {
+    rows[0].textContent = '¥' + tb.toFixed(2);
+    rows[1].textContent = '¥' + tbal.toFixed(2);
+    rows[3].textContent = '¥' + ta.toFixed(2);
+  }
+}
+
+function onRestDaysChange() {
+  if (!appState.currentData) return;
+  const rd = parseInt(document.getElementById('restDays').value) || 2;
+  appState.currentData.restDays = rd;
+  const ed = appState.currentData.totalDays - rd;
+  for (const emp of appState.currentData.employees) {
+    const sal = getSal(emp.name);
+    const bp = calcBasePay(sal.mode || 'monthly', sal.inputValue !== undefined ? sal.inputValue : '', emp.totalWorkingDays, ed);
+    const ap = calcActualPay(bp, sal.balancePrev || 0);
+    setSal(emp.name, { basePay: bp, actualPay: ap, expectedDays: ed });
+  }
+  saveCurrentMonth();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════
+// Add / Remove employees
+// ═══════════════════════════════════════════
+function showAddEmployeeModal() {
+  document.getElementById('addEmpModal').classList.add('show');
+  document.getElementById('newEmpName').value = '';
+  document.getElementById('newEmpDept').value = '';
+  document.getElementById('newEmpName').focus();
+}
+function closeAddEmployeeModal() {
+  document.getElementById('addEmpModal').classList.remove('show');
+}
+function addEmployee() {
+  const name = document.getElementById('newEmpName').value.trim();
+  if (!name) return alert('请输入姓名');
+  const dept = document.getElementById('newEmpDept').value.trim();
+
+  const data = appState.currentData;
+  if (data.employees.find(e => e.name === name)) return alert('该人员已存在');
+
+  const emp = makeEmptyEmployee(name, dept, data.totalDays);
+  emp.isManual = true;
+  data.employees.push(emp);
+
+  const ed = data.totalDays - (data.restDays || 2);
+  data.salary[name] = makeDefaultSalary(ed);
+
+  if (!data.manualEmployees) data.manualEmployees = [];
+  data.manualEmployees.push({ name, department: dept });
+
+  closeAddEmployeeModal();
+  saveCurrentMonth();
+  renderAll();
+}
+
+function removeEmployee(name) {
+  if (!confirm(`确定从本月工资表中移除「${name}」？\n（打卡记录中的人员下次导入会重新出现）`)) return;
+
+  const data = appState.currentData;
+  data.employees = data.employees.filter(e => e.name !== name);
+  delete data.salary[name];
+  if (data.manualEmployees) data.manualEmployees = data.manualEmployees.filter(e => e.name !== name);
+
+  saveCurrentMonth();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════
+// Expenses
+// ═══════════════════════════════════════════
+let expenseIdCounter = Date.now();
+
+function renderExpenseTable() {
+  const data = appState.currentData;
+  if (!data) return;
+  const table = document.getElementById('expenseTable');
+  const expenses = data.expenses || [];
+
+  let html = '<thead><tr><th>项目</th><th>金额</th><th>操作</th></tr></thead><tbody>';
+  let total = 0;
+  for (const ex of expenses) {
+    total += ex.amount || 0;
+    html += '<tr>';
+    html += `<td><input class="name-inp" type="text" value="${escHtml(ex.name || '')}" data-expense-id="${ex.id}" data-field="name" onchange="onExpenseChange(this)" placeholder="支出项目"></td>`;
+    html += `<td><input type="number" step="0.01" value="${ex.amount || ''}" data-expense-id="${ex.id}" data-field="amount" onchange="onExpenseChange(this)" placeholder="金额"></td>`;
+    html += `<td><button class="btn btn-sm btn-danger" onclick="deleteExpense('${ex.id}')">✕</button></td>`;
+    html += '</tr>';
+  }
+  if (expenses.length > 0) {
+    html += `<tr style="font-weight:700;background:#f9fafb"><td>合计</td><td>¥${total.toFixed(2)}</td><td></td></tr>`;
+  } else {
+    html += '<tr><td colspan="3" style="color:#999;padding:12px">暂无其他支出</td></tr>';
+  }
+  html += '</tbody>';
+  table.innerHTML = html;
+
+  document.getElementById('finExpenseTotal').textContent = '¥' + total.toFixed(2);
+}
+
+function addExpense() {
+  const data = appState.currentData;
+  if (!data.expenses) data.expenses = [];
+  data.expenses.push({ id: ++expenseIdCounter, name: '', amount: 0 });
+  saveCurrentMonth();
+  renderExpenseTable();
+  renderFinanceSummary();
+}
+
+function deleteExpense(id) {
+  const data = appState.currentData;
+  if (!data.expenses) return;
+  data.expenses = data.expenses.filter(e => e.id != id);
+  saveCurrentMonth();
+  renderExpenseTable();
+  renderFinanceSummary();
+}
+
+function onExpenseChange(input) {
+  const data = appState.currentData;
+  if (!data.expenses) return;
+  const id = input.dataset.expenseId;
+  const field = input.dataset.field;
+  const val = input.value.trim();
+  const ex = data.expenses.find(e => e.id == id);
+  if (!ex) return;
+  if (field === 'name') ex.name = val;
+  else ex.amount = val === '' ? 0 : (parseFloat(val) || 0);
+  saveCurrentMonth();
+  renderExpenseTable();
+  renderFinanceSummary();
+}
+
+// ═══════════════════════════════════════════
+// Finance summary
+// ═══════════════════════════════════════════
+function renderFinanceSummary() {
+  const data = appState.currentData;
+  if (!data) return;
+
+  if (!data.finance) data.finance = {};
+
+  let salaryTotal = 0;
+  for (const emp of data.employees) {
+    const s = data.salary[emp.name] || {};
+    if (s.actualPay !== null && s.actualPay !== undefined) salaryTotal += s.actualPay;
+  }
+
+  let expenseTotal = 0;
+  for (const ex of (data.expenses || [])) {
+    expenseTotal += ex.amount || 0;
+  }
+
+  const transferIn = document.getElementById('finTransferIn').value.trim();
+  const balancePrevRaw = document.getElementById('finBalancePrev').value.trim();
+
+  data.finance.transferIn = transferIn === '' ? '' : (parseFloat(transferIn) || 0);
+  data.finance.balancePrev = balancePrevRaw === '' ? 0 : (parseFloat(balancePrevRaw) || 0);
+
+  const balanceMonth = data.finance.balancePrev + (parseFloat(transferIn) || 0) - salaryTotal - expenseTotal;
+  data.finance.balanceMonth = Math.round(balanceMonth * 100) / 100;
+
+  document.getElementById('finSalaryTotal').textContent = '¥' + salaryTotal.toFixed(2);
+
+  const bmEl = document.getElementById('finBalanceMonth');
+  bmEl.textContent = '¥' + data.finance.balanceMonth.toFixed(2);
+  bmEl.className = 'value ' + (data.finance.balanceMonth >= 0 ? 'positive' : 'negative');
+
+  saveCurrentMonth();
+}
+
+function onFinanceChange() {
+  const data = appState.currentData;
+  if (!data) return;
+  if (!data.finance) data.finance = {};
+  const tVal = document.getElementById('finTransferIn').value.trim();
+  const bVal = document.getElementById('finBalancePrev').value.trim();
+  data.finance.transferIn = tVal === '' ? '' : (parseFloat(tVal) || 0);
+  data.finance.balancePrev = bVal === '' ? 0 : (parseFloat(bVal) || 0);
+  renderFinanceSummary();
+}
+
+// ═══════════════════════════════════════════
+// Export
+// ═══════════════════════════════════════════
+function exportXlsx() {
+  const data = appState.currentData;
+  if (!data) return alert('请先加载打卡记录');
+
+  // Sheet 1: Attendance
+  const attRows = [];
+  const h1 = ['姓名']; for (let d = 1; d <= data.totalDays; d++) h1.push(`${d}`); h1.push('出勤天数'); attRows.push(h1);
+  const h2 = ['']; for (let d = 1; d <= data.totalDays; d++) h2.push(getDayOfWeek(data.year, data.month, d)); h2.push(''); attRows.push(h2);
+  for (const emp of data.employees) {
+    const r = [emp.name];
+    for (const dd of emp.dailyDetail) r.push(dd.weight === 1 ? '1' : dd.weight === 0.5 ? '0.5' : '-');
+    r.push(emp.totalWorkingDays);
+    attRows.push(r);
+  }
+
+  // Sheet 2: Salary
+  const salRows = [['姓名','部门','计算方式','日薪/月薪','出勤天数','应出勤天数','应发工资','上月结余','本月结余','实发工资','备注']];
+  for (const emp of data.employees) {
+    const s = data.salary[emp.name] || {};
+    salRows.push([emp.name, emp.department, s.mode === 'daily' ? '日薪' : '月薪', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, data.totalDays - (data.restDays || 2), s.basePay !== null ? s.basePay : '', s.balancePrev || 0, s.balanceNext || 0, s.actualPay !== null ? s.actualPay : '', s.note || '']);
+  }
+
+  // Sheet 3: Expenses & Finance
+  const finRows = [['其他支出'], ['项目', '金额']];
+  for (const ex of (data.expenses || [])) finRows.push([ex.name, ex.amount]);
+  let et = 0; for (const ex of (data.expenses || [])) et += ex.amount || 0;
+  finRows.push(['支出合计', et]);
+  finRows.push([]);
+  finRows.push(['财务汇总']);
+  let st = 0; for (const emp of data.employees) { const s = data.salary[emp.name] || {}; if (s.actualPay !== null) st += s.actualPay; }
+  finRows.push(['工资合计', st]);
+  finRows.push(['本月实际转入', (data.finance || {}).transferIn || 0]);
+  finRows.push(['上月总结余', (data.finance || {}).balancePrev || 0]);
+  finRows.push(['本月结余', (data.finance || {}).balanceMonth || 0]);
+
+  const wb = XLSX.utils.book_new();
+  const ws1 = XLSX.utils.aoa_to_sheet(attRows); ws1['!cols'] = [{wch:10}].concat(Array(data.totalDays).fill({wch:8})).concat([{wch:10}]);
+  XLSX.utils.book_append_sheet(wb, ws1, '打卡汇总');
+  const ws2 = XLSX.utils.aoa_to_sheet(salRows); ws2['!cols'] = [{wch:10},{wch:14},{wch:8},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:10},{wch:12},{wch:10}];
+  XLSX.utils.book_append_sheet(wb, ws2, '工资计算');
+  const ws3 = XLSX.utils.aoa_to_sheet(finRows); ws3['!cols'] = [{wch:20},{wch:14}];
+  XLSX.utils.book_append_sheet(wb, ws3, '支出与汇总');
+
+  XLSX.writeFile(wb, `工资计算_${data.year}年${data.month}月.xlsx`);
+}
+
+// ═══════════════════════════════════════════
+// Utilities
+// ═══════════════════════════════════════════
+function escHtml(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+function cssSafe(name) { return name.replace(/[^a-zA-Z0-9一-鿿]/g, '_'); }
+
+// ═══════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════
+(function init() {
+  const allData = loadAllData();
+  const months = Object.keys(allData.months).sort();
+  if (months.length > 0) {
+    const last = months[months.length - 1];
+    appState.activeMonth = last;
+    appState.currentData = allData.months[last];
+    document.getElementById('dropZone').style.display = 'none';
+    document.getElementById('fileBar').classList.add('show');
+    document.getElementById('fileName').textContent = appState.currentData.fileName || '(未知文件)';
+    document.getElementById('restDays').value = appState.currentData.restDays || 2;
+    renderMonthTabs();
+    renderAll();
+  }
+})();
+</script>
+</body>
+</html>
