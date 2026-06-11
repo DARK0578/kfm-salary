@@ -8,11 +8,11 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f1f3f6; color: #1e293b; padding: 12px 16px; -webkit-font-smoothing: antialiased; }
-.app { max-width: 100%; margin: 0 auto; }
+.app { max-width: 100%; }
 
 .header { margin-bottom: 12px; }
-.header h1 { font-size: 18px; font-weight: 800; color: #0f172a; }
-.header .subtitle { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.header h1 { font-size: 18px; font-weight: 800; }
+.header .sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
 
 .drop-zone { border: 2px dashed #d4d4d8; border-radius: 10px; padding: 24px; text-align: center; background: #fff; cursor: pointer; transition: all .15s; margin-bottom: 12px; }
 .drop-zone:hover, .drop-zone.drag-over { border-color: #6366f1; background: #eef2ff; }
@@ -40,7 +40,7 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 .section-header h3 { font-size: 15px; font-weight: 700; }
 .table-wrap { overflow-x: auto; border: 1px solid #e2e5e9; border-radius: 6px; }
 
-/* --- Attendance --- */
+/* ===== Attendance ===== */
 table { border-collapse: collapse; width: 100%; font-size: 12px; }
 table.att th, table.att td { padding: 3px 5px; text-align: center; white-space: nowrap; min-width: 28px; border-right: 1px solid #e2e5e9; }
 table.att td:last-child, table.att th:last-child { border-right: none; }
@@ -56,7 +56,7 @@ table.att td.e05 { color: #f59e0b; font-weight: 700; font-size: 13px; }
 table.att td.e0 { color: #cbd5e1; }
 table.att td.sum-col { font-weight: 700; background: #eef2ff; color: #6366f1; font-size: 13px; }
 
-/* --- Salary --- */
+/* ===== Salary ===== */
 table.sal { font-size: 13px; }
 table.sal th, table.sal td { padding: 6px 10px; text-align: center; border-right: 1px solid #e2e5e9; border-bottom: 1px solid #f1f5f9; }
 table.sal td:last-child, table.sal th:last-child { border-right: none; }
@@ -73,11 +73,12 @@ table.sal .trow td { background: #eef2ff; font-weight: 700; }
 .badge.warn { background: #fef3c7; color: #b45309; }
 .badge.man { background: #e0e7ff; color: #4f46e5; }
 
-/* --- Bottom grid --- */
-.bottom-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 12px; }
+/* ===== Bottom ===== */
+.bottom-grid { display: none; grid-template-columns: 1fr 1.3fr; gap: 12px; }
+.bottom-grid.show { display: grid; }
 .bottom-grid .section { margin-bottom: 0; }
 
-/* --- Expense --- */
+/* ===== Expense ===== */
 table.exp { font-size: 12px; }
 table.exp th, table.exp td { padding: 5px 10px; text-align: center; border-right: 1px solid #e2e5e9; border-bottom: 1px solid #f1f5f9; }
 table.exp td:last-child, table.exp th:last-child { border-right: none; }
@@ -86,7 +87,7 @@ table.exp input { padding: 4px 8px; border: 1px solid #d4d4d8; border-radius: 5p
 table.exp input:focus { outline: none; border-color: #6366f1; background: #fff; }
 table.exp input.ni { width: 100%; text-align: left; }
 
-/* --- Finance --- */
+/* ===== Finance ===== */
 .fin-wrap { display: flex; flex-direction: column; gap: 14px; }
 .fin-mega { text-align: center; background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%); border-radius: 12px; padding: 22px 24px 16px; color: #fff; }
 .fin-mega .label { font-size: 13px; color: rgba(255,255,255,.6); letter-spacing: .5px; margin-bottom: 6px; }
@@ -107,7 +108,7 @@ table.exp input.ni { width: 100%; text-align: left; }
 .fin-result .rlbl { font-size: 13px; font-weight: 600; }
 .fin-result .rval { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-/* --- Buttons --- */
+/* ===== Buttons ===== */
 .btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .12s; }
 .btn-primary { background: #6366f1; color: #fff; }
 .btn-primary:hover { background: #4f46e5; }
@@ -120,7 +121,7 @@ table.exp input.ni { width: 100%; text-align: left; }
 .btn-green:hover { background: #059669; }
 .btn-row { display: flex; gap: 8px; margin-top: 12px; }
 
-/* --- Toggle --- */
+/* ===== Toggle ===== */
 .toggle-row { display: flex; gap: 5px; margin-bottom: 10px; }
 .tgl { padding: 5px 14px; border: 1px solid #d4d4d8; border-radius: 6px; background: #fff; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; transition: all .12s; }
 .tgl:hover { border-color: #6366f1; }
@@ -129,7 +130,7 @@ table.exp input.ni { width: 100%; text-align: left; }
 .cfg { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 5px 12px; background: #f8fafc; border-radius: 6px; font-size: 12px; color: #64748b; }
 .cfg input { width: 40px; padding: 3px 5px; border: 1px solid #d4d4d8; border-radius: 4px; text-align: center; font-size: 12px; }
 
-/* --- Modal --- */
+/* ===== Modal ===== */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.4); z-index: 100; align-items: center; justify-content: center; }
 .modal-overlay.show { display: flex; }
 .modal { background: #fff; border-radius: 10px; padding: 20px 24px; min-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,.12); }
@@ -138,12 +139,11 @@ table.exp input.ni { width: 100%; text-align: left; }
 .modal input { width: 100%; padding: 6px 10px; border: 1px solid #d4d4d8; border-radius: 5px; font-size: 13px; }
 .modal input:focus { outline: none; border-color: #6366f1; }
 
-/* --- Print --- */
+/* ===== Print ===== */
 @media print {
-  body { background: #fff; }
+  body { background: #fff; padding: 0; }
   .header, .drop-zone, .file-bar, .btn-row, .toggle-row, #dropZone, .month-tabs, .section-header, .modal-overlay { display: none !important; }
   .section { box-shadow: none; border: none; padding: 6px 0; margin-bottom: 10px; display: block !important; page-break-inside: avoid; }
-  .section h3 { font-size: 14px; }
   table { font-size: 10px; }
   @page { size: A3 landscape; margin: 10mm; }
 }
@@ -158,85 +158,67 @@ table.exp input.ni { width: 100%; text-align: left; }
 </head>
 <body>
 <div class="app">
-  <div class="header">
-    <h1>💰 工资计算器</h1>
-    <div class="subtitle">拖入钉钉打卡记录 xlsx → 自动生成汇总 · 半天判定 · 其他支出 · 财务汇总</div>
+<div class="header"><h1>💰 工资计算器</h1><div class="sub">拖入钉钉打卡记录 xlsx → 自动生成汇总 · 半天判定 · 其他支出 · 财务汇总</div></div>
+
+<div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+  <div class="icon">📂</div>
+  <div class="text">点击选择文件 或 拖拽 xlsx 到此处</div>
+  <div class="hint">支持钉钉导出的打卡时间报表</div>
+  <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
+</div>
+
+<div class="file-bar" id="fileBar"><span>📄</span> <span class="file-name" id="fileName"></span><button class="btn-reset" onclick="resetUpload()">重新上传</button></div>
+<div class="month-tabs" id="monthTabs"></div>
+
+<div class="section" id="errorSection"><div style="color:#ef4444;font-weight:600" id="errorMsg"></div></div>
+
+<!-- ATTENDANCE -->
+<div class="section" id="attendanceSection">
+  <div class="section-header"><h3>📋 打卡记录汇总</h3></div>
+  <div class="toggle-row">
+    <button class="tgl on" id="btnDayView" onclick="setAttView('day')">📊 出勤天数</button>
+    <button class="tgl" id="btnTimeView" onclick="setAttView('time')">🕐 打卡时间</button>
   </div>
+  <div class="table-wrap"><table class="att" id="attendanceTable"></table></div>
+</div>
 
-  <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-    <div class="icon">📂</div>
-    <div class="text">点击选择文件 或 拖拽 xlsx 文件到此处</div>
-    <div class="hint">支持钉钉导出的打卡时间报表 (.xlsx)</div>
-    <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
+<!-- SALARY -->
+<div class="section" id="salarySection">
+  <div class="section-header"><h3>🧮 工资计算</h3><button class="btn btn-green btn-sm" onclick="showAddEmployeeModal()">+ 新增人员</button></div>
+  <div class="cfg">固定休息: <input type="number" id="restDays" value="2" min="0" max="31" onchange="onRestDaysChange()"> <span>· 应出勤 = 当月天数 − 休息日 · 半天 < 5h = 0.5天</span></div>
+  <div class="table-wrap"><table class="sal" id="salaryTable"></table></div>
+</div>
+
+<!-- BOTTOM: Expense + Finance -->
+<div class="bottom-grid" id="bottomGrid">
+  <div class="section" id="expenseSection">
+    <div class="section-header"><h3>💸 其他支出</h3><button class="btn btn-green btn-sm" onclick="addExpense()">+ 添加</button></div>
+    <div class="table-wrap"><table class="exp" id="expenseTable"></table></div>
   </div>
-
-  <div class="file-bar" id="fileBar">
-    <span>📄</span> <span class="file-name" id="fileName"></span>
-    <button class="btn-reset" onclick="resetUpload()">重新上传</button>
-  </div>
-
-  <div class="month-tabs" id="monthTabs"></div>
-
-  <div class="section" id="errorSection"><div style="color:#ef4444;font-weight:600" id="errorMsg"></div></div>
-
-  <!-- ATTENDANCE -->
-  <div class="section" id="attendanceSection">
-    <div class="section-header"><h3>📋 打卡记录汇总</h3></div>
-    <div class="toggle-row">
-      <button class="tgl on" id="btnDayView" onclick="setAttView('day')">📊 出勤天数</button>
-      <button class="tgl" id="btnTimeView" onclick="setAttView('time')">🕐 打卡时间</button>
-    </div>
-    <div class="table-wrap"><table class="att" id="attendanceTable"></table></div>
-  </div>
-
-  <!-- SALARY -->
-  <div class="section" id="salarySection">
-    <div class="section-header">
-      <h3>🧮 工资计算</h3>
-      <button class="btn btn-green btn-sm" onclick="showAddEmployeeModal()">+ 新增人员</button>
-    </div>
-    <div class="cfg">
-      固定休息: <input type="number" id="restDays" value="2" min="0" max="31" onchange="onRestDaysChange()"> <span>· 应出勤 = 当月天数 − 休息日 · 半天 < 5h = 0.5天</span>
-    </div>
-    <div class="table-wrap"><table class="sal" id="salaryTable"></table></div>
-  </div>
-
-  <!-- BOTTOM: Expense + Finance -->
-  <div class="bottom-grid" style="display:none" id="bottomGrid">
-    <div class="section" id="expenseSection">
-      <div class="section-header">
-        <h3>💸 其他支出</h3>
-        <button class="btn btn-green btn-sm" onclick="addExpense()">+ 添加</button>
+  <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none" id="financeSection">
+    <div class="fin-wrap">
+      <div class="fin-mega">
+        <div class="label">本月总计</div>
+        <div class="number" id="finGrandTotal">¥0.00</div>
+        <div class="subitems" id="finBreakdown"></div>
       </div>
-      <div class="table-wrap"><table class="exp" id="expenseTable"></table></div>
-    </div>
-
-    <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none" id="financeSection">
-      <div class="fin-wrap">
-        <div class="fin-mega">
-          <div class="label">本月总计</div>
-          <div class="number" id="finGrandTotal">¥0.00</div>
-          <div class="subitems" id="finBreakdown"></div>
-        </div>
-        <div class="fin-rows">
-          <div class="fin-row"><label>本月实际转入</label><input type="number" step="0.01" id="finTransferIn" onchange="onFinanceChange()" placeholder="财务打款"></div>
-          <div class="fin-row"><label>上月结余</label><input type="number" step="0.01" id="finBalancePrev" onchange="onFinanceChange()" placeholder="可负"></div>
-        </div>
-        <div class="fin-result pos" id="finResult">
-          <span class="rlbl">本月剩余</span>
-          <span class="rval" id="finRemaining">¥0.00</span>
-        </div>
+      <div class="fin-rows">
+        <div class="fin-row"><label>本月实际转入</label><input type="number" step="0.01" id="finTransferIn" onchange="onFinanceChange()" placeholder="财务打款"></div>
+        <div class="fin-row"><label>上月结余</label><input type="number" step="0.01" id="finBalancePrev" onchange="onFinanceChange()" placeholder="可负"></div>
       </div>
+      <div class="fin-result pos" id="finResult"><span class="rlbl">本月剩余</span><span class="rval" id="finRemaining">¥0.00</span></div>
     </div>
-  </div>
-
-  <div class="btn-row" style="display:none" id="exportBtns">
-    <button class="btn btn-primary" onclick="exportXlsx()">📥 导出 Excel</button>
-    <button class="btn btn-outline" onclick="window.print()">🖨️ 打印 / 导出 PDF</button>
-    <button class="btn btn-red" onclick="deleteCurrentMonth()">🗑️ 删除当前月份</button>
   </div>
 </div>
 
+<div class="btn-row" style="display:none" id="exportBtns">
+  <button class="btn btn-primary" onclick="exportXlsx()">📥 导出 Excel</button>
+  <button class="btn btn-outline" onclick="window.print()">🖨️ 打印 / 导出 PDF</button>
+  <button class="btn btn-red" onclick="deleteCurrentMonth()">🗑️ 删除当前月份</button>
+</div>
+</div>
+
+<!-- Add Employee Modal -->
 <div class="modal-overlay" id="addEmpModal">
   <div class="modal">
     <h3>新增人员</h3>
@@ -250,50 +232,50 @@ table.exp input.ni { width: 100%; text-align: left; }
 </div>
 
 <script>
-// ═══════════════════ Constants ═══════════════════
-const STORAGE_KEY = 'kfm_payroll_v5';
+// ═══════════════════════════════════════════════
+// 工资计算器 v5 — 完整功能版
+// ═══════════════════════════════════════════════
+const STORAGE_KEY = 'kfm_v5';
 const HALF_DAY_HOURS = 5;
+
 let appState = { activeMonth: null, currentData: null, attView: 'day' };
-let expenseIdCounter = Date.now();
+let expId = Date.now();
 
-// ═══════════════════ Persistence ═══════════════════
-function loadAllData() { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : { employees: {}, months: {} }; } catch { return { employees: {}, months: {} }; } }
-function saveAllData(data) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {} }
-function saveCurrentMonth() { const data = loadAllData(); if (appState.currentData) { data.months[appState.activeMonth] = appState.currentData; saveAllData(data); } }
+// ── Persistence ──
+function load() { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : { emps: {}, months: {} }; } catch { return { emps: {}, months: {} }; } }
+function save(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch {} }
+function saveMonth() { const d = load(); if (appState.currentData) { d.months[appState.activeMonth] = appState.currentData; save(d); } }
 
-// ═══════════════════ Helpers ═══════════════════
-function timeToMinutes(t) { const p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
-function calcDayWeight(times) {
+// ── Time helpers ──
+function t2m(t) { const p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
+function dayWeight(times) {
   if (!times || times.length === 0) return { weight: 0, hours: 0 };
-  const mins = times.map(timeToMinutes);
+  const mins = times.map(t2m);
   const hours = (Math.max(...mins) - Math.min(...mins)) / 60;
   if (hours >= HALF_DAY_HOURS) return { weight: 1, hours: Math.round(hours * 10) / 10 };
   if (hours > 0) return { weight: 0.5, hours: Math.round(hours * 10) / 10 };
   return { weight: 0, hours: 0 };
 }
-function getDow(y, m, d) { return ['日','一','二','三','四','五','六'][new Date(y, m - 1, d).getDay()]; }
+function dow(y, m, d) { return ['日','一','二','三','四','五','六'][new Date(y, m - 1, d).getDay()]; }
 function isWE(y, m, d) { const w = new Date(y, m - 1, d).getDay(); return w === 0 || w === 6; }
 function esc(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
-function cssSafe(n) { return n.replace(/[^a-zA-Z0-9一-鿿]/g, '_'); }
-
-function calcBasePay(mode, value, workingDays, expectedDays) {
-  if (value === '' || isNaN(parseFloat(value)) || parseFloat(value) < 0) return null;
-  const num = parseFloat(value);
-  if (mode === 'daily') return Math.round(workingDays * num * 100) / 100;
-  if (expectedDays <= 0) return 0;
-  return Math.round((workingDays / expectedDays) * num * 100) / 100;
+function cs(n) { return n.replace(/[^a-zA-Z0-9一-鿿]/g, '_'); }
+function calcBP(mode, val, wd, ed) {
+  if (val === '' || isNaN(parseFloat(val)) || parseFloat(val) < 0) return null;
+  const n = parseFloat(val);
+  if (mode === 'daily') return Math.round(wd * n * 100) / 100;
+  if (ed <= 0) return 0;
+  return Math.round((wd / ed) * n * 100) / 100;
 }
-function calcActualPay(basePay, midDeduct) {
-  if (basePay === null) return null;
-  return Math.round((basePay - (midDeduct || 0)) * 100) / 100;
-}
+function calcAP(bp, md) { if (bp === null) return null; return Math.round((bp - (md || 0)) * 100) / 100; }
+function prevMonth(y, m) { return m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`; }
 
-// ═══════════════════ File ═══════════════════
-const dropZone = document.getElementById('dropZone');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); const f = e.dataTransfer.files[0]; if (f) processFile(f); });
-function handleFile(event) { const f = event.target.files[0]; if (f) processFile(f); }
+// ── File ──
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); const f = e.dataTransfer.files[0]; if (f) processFile(f); });
+function handleFile(ev) { const f = ev.target.files[0]; if (f) processFile(f); }
 function resetUpload() { document.getElementById('fileBar').classList.remove('show'); document.getElementById('dropZone').style.display = ''; document.getElementById('fileInput').value = ''; }
 
 function processFile(file) {
@@ -303,367 +285,252 @@ function processFile(file) {
       const data = new Uint8Array(e.target.result);
       const wb = XLSX.read(data, { type: 'array' });
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
-      const parsed = parseAttendance(rows, file.name);
-      const monthKey = `${parsed.year}-${String(parsed.month).padStart(2, '0')}`;
-      const allData = loadAllData();
-      const existing = allData.months[monthKey];
+      const parsed = parse(rows, file.name);
+      const mk = `${parsed.year}-${String(parsed.month).padStart(2, '0')}`;
+      const all = load(); const existing = all.months[mk];
 
-      // Merge manual employees
-      if (existing && existing.manualEmployees) {
-        for (const me of existing.manualEmployees) {
+      if (existing && existing.manual) {
+        for (const me of existing.manual) {
           if (!parsed.employees.find(e => e.name === me.name)) {
-            parsed.employees.push(makeEmptyEmployee(me.name, me.department, parsed.totalDays));
-            parsed.salary[me.name] = existing.salary[me.name] || makeDefaultSalary(parsed.totalDays - parsed.restDays);
+            parsed.employees.push(emptyEmp(me.name, me.dept, parsed.totalDays));
+            parsed.salary[me.name] = existing.salary[me.name] || defSal(parsed.totalDays - parsed.restDays);
           }
         }
-        parsed.manualEmployees = existing.manualEmployees;
+        parsed.manual = existing.manual;
       }
-      if (existing) {
-        parsed.expenses = existing.expenses || [];
-        parsed.finance = existing.finance || {};
-        parsed.restDays = existing.restDays !== undefined ? existing.restDays : parsed.restDays;
-      }
-      // Restore employee configs
+      if (existing) { parsed.expenses = existing.expenses || []; parsed.finance = existing.finance || {}; parsed.restDays = existing.restDays !== undefined ? existing.restDays : parsed.restDays; }
       for (const emp of parsed.employees) {
-        const saved = (allData.employees || {})[emp.name] || {};
-        if (!parsed.salary[emp.name]) parsed.salary[emp.name] = makeDefaultSalary(parsed.totalDays - parsed.restDays);
+        const saved = (all.emps || {})[emp.name] || {};
+        if (!parsed.salary[emp.name]) parsed.salary[emp.name] = defSal(parsed.totalDays - parsed.restDays);
         parsed.salary[emp.name].mode = saved.mode || parsed.salary[emp.name].mode || 'monthly';
         parsed.salary[emp.name].inputValue = saved.value !== undefined ? saved.value : (parsed.salary[emp.name].inputValue || '');
       }
 
-      appState.activeMonth = monthKey;
-      appState.currentData = parsed;
-      allData.months[monthKey] = parsed;
-      saveAllData(allData);
+      appState.activeMonth = mk; appState.currentData = parsed;
+      all.months[mk] = parsed; save(all);
 
       document.getElementById('fileBar').classList.add('show');
       document.getElementById('fileName').textContent = file.name;
       document.getElementById('dropZone').style.display = 'none';
       document.getElementById('errorSection').classList.remove('show');
       document.getElementById('restDays').value = parsed.restDays || 2;
-      renderMonthTabs();
-      renderAll();
-    } catch (err) {
-      console.error(err);
-      document.getElementById('errorSection').classList.add('show');
-      document.getElementById('errorMsg').textContent = '❌ 文件解析失败：' + err.message;
-    }
+      renderTabs(); renderAll();
+    } catch (err) { console.error(err); document.getElementById('errorSection').classList.add('show'); document.getElementById('errorMsg').textContent = '❌ ' + err.message; }
   };
   reader.readAsArrayBuffer(file);
 }
 
-function parseAttendance(rows, fileName) {
-  const titleStr = String(rows[0][0] || '');
-  const m = titleStr.match(/(\d{4})-(\d{2})-(\d{2})\s*至\s*(\d{4})-(\d{2})-(\d{2})/);
-  if (!m) throw new Error('无法提取日期范围');
-  const year = parseInt(m[1]), month = parseInt(m[2]), totalDays = parseInt(m[6]);
-  const allData = loadAllData();
-  const monthKey = `${year}-${String(month).padStart(2, '0')}`;
-  const existing = allData.months[monthKey];
-
+function parse(rows, fileName) {
+  const t = String(rows[0][0] || ''); const m = t.match(/(\d{4})-(\d{2})-(\d{2})\s*至\s*(\d{4})-(\d{2})-(\d{2})/); if (!m) throw new Error('无法提取日期');
+  const yr = parseInt(m[1]), mo = parseInt(m[2]), td = parseInt(m[6]);
+  const all = load(); const mk = `${yr}-${String(mo).padStart(2, '0')}`; const existing = all.months[mk];
   const employees = [];
-  for (let i = 4; i < rows.length; i++) {
-    const row = rows[i]; if (!row || !row[0]) continue;
-    const name = String(row[0]).trim(); if (!name) continue;
-    employees.push(buildEmployeeFromRow(name, String(row[1] || '').trim(), row, totalDays));
-  }
-  const restDays = existing ? existing.restDays : 2;
-  const salary = {};
-  const storedEmployees = allData.employees || {};
-  const prevMonthKey = getPrevMonthKey(year, month);
-  const prevMonth = allData.months[prevMonthKey];
-
+  for (let i = 4; i < rows.length; i++) { const row = rows[i]; if (!row || !row[0]) continue; const nm = String(row[0]).trim(); if (!nm) continue; employees.push(buildEmp(nm, String(row[1] || '').trim(), row, td)); }
+  const rd = existing ? existing.restDays : 2; const salary = {}; const semps = all.emps || {};
+  const pmk = prevMonth(yr, mo); const pm = all.months[pmk];
   for (const emp of employees) {
-    const saved = storedEmployees[emp.name] || {};
-    const mode = saved.mode || 'monthly';
-    const inputValue = saved.value !== undefined ? saved.value : '';
-    const expectedDays = totalDays - restDays;
-    const basePay = calcBasePay(mode, inputValue, emp.totalWorkingDays, expectedDays);
-    let midDeduct = 0;
-    if (existing && existing.salary && existing.salary[emp.name]) midDeduct = existing.salary[emp.name].midDeduct || 0;
-    const actualPay = calcActualPay(basePay, midDeduct);
-    let note = '';
-    if (existing && existing.salary && existing.salary[emp.name]) note = existing.salary[emp.name].note || '';
-    salary[emp.name] = { mode, inputValue, workingDays: emp.totalWorkingDays, expectedDays, basePay, midDeduct, actualPay, note };
+    const sv = semps[emp.name] || {}; const mode = sv.mode || 'monthly'; const iv = sv.value !== undefined ? sv.value : '';
+    const ed = td - rd; const bp = calcBP(mode, iv, emp.totalWorkingDays, ed);
+    let md = 0; if (existing && existing.salary && existing.salary[emp.name]) md = existing.salary[emp.name].midDeduct || 0;
+    const ap = calcAP(bp, md);
+    let note = ''; if (existing && existing.salary && existing.salary[emp.name]) note = existing.salary[emp.name].note || '';
+    salary[emp.name] = { mode, inputValue: iv, workingDays: emp.totalWorkingDays, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note };
   }
-
-  let finance = {};
-  if (existing && existing.finance) finance = { ...existing.finance };
-  if (prevMonth && prevMonth.finance && finance.balancePrev === undefined) finance.balancePrev = prevMonth.finance.balanceMonth || 0;
-
-  let expenses = existing ? (existing.expenses || []) : [];
-  return { fileName, year, month, totalDays, restDays, employees, salary, expenses, finance, manualEmployees: existing ? (existing.manualEmployees || []) : [] };
+  let fin = {}; if (existing && existing.finance) fin = { ...existing.finance };
+  if (pm && pm.finance && fin.balancePrev === undefined) fin.balancePrev = pm.finance.balanceMonth || 0;
+  let exps = existing ? (existing.expenses || []) : [];
+  return { fileName, year: yr, month: mo, totalDays: td, restDays: rd, employees, salary, expenses: exps, finance: fin, manual: existing ? (existing.manual || []) : [] };
 }
 
-function buildEmployeeFromRow(name, department, row, totalDays) {
-  const dailyDetail = []; let totalWorkingDays = 0;
-  for (let d = 0; d < totalDays; d++) {
-    const raw = String(row[6 + d] || '');
-    const times = parsePunchTimes(raw);
-    const { weight, hours } = calcDayWeight(times);
-    totalWorkingDays += weight;
-    dailyDetail.push({ day: d + 1, times: times || [], hours, weight });
-  }
-  return { name, department, dailyDetail, totalWorkingDays: Math.round(totalWorkingDays * 10) / 10 };
+function buildEmp(name, dept, row, td) {
+  const dd = []; let tw = 0;
+  for (let d = 0; d < td; d++) { const raw = String(row[6 + d] || ''); const times = parsePunch(raw); const { weight, hours } = dayWeight(times); tw += weight; dd.push({ day: d + 1, times: times || [], hours, weight }); }
+  return { name, department: dept, dailyDetail: dd, totalWorkingDays: Math.round(tw * 10) / 10 };
 }
-function parsePunchTimes(raw) { if (!raw || raw.trim() === '') return null; const lines = raw.split(/\n|\r\n?/); const times = []; for (const line of lines) { const m = line.trim().match(/(\d{1,2}:\d{2})/); if (m) times.push(m[1]); } return times.length > 0 ? times : null; }
-function makeEmptyEmployee(name, department, totalDays) { const dd = []; for (let d = 0; d < totalDays; d++) dd.push({ day: d + 1, times: [], hours: 0, weight: 0 }); return { name, department, dailyDetail: dd, totalWorkingDays: 0, isManual: true }; }
-function makeDefaultSalary(expectedDays) { return { mode: 'monthly', inputValue: '', workingDays: 0, expectedDays, basePay: null, midDeduct: 0, actualPay: null, note: '' }; }
-function getPrevMonthKey(year, month) { return month === 1 ? `${year - 1}-12` : `${year}-${String(month - 1).padStart(2, '0')}`; }
+function parsePunch(raw) { if (!raw || raw.trim() === '') return null; const times = []; for (const line of raw.split(/\n|\r\n?/)) { const m = line.trim().match(/(\d{1,2}:\d{2})/); if (m) times.push(m[1]); } return times.length > 0 ? times : null; }
+function emptyEmp(name, dept, td) { const dd = []; for (let d = 0; d < td; d++) dd.push({ day: d + 1, times: [], hours: 0, weight: 0 }); return { name, department: dept, dailyDetail: dd, totalWorkingDays: 0, isManual: true }; }
+function defSal(ed) { return { mode: 'monthly', inputValue: '', workingDays: 0, expectedDays: ed, basePay: null, midDeduct: 0, actualPay: null, note: '' }; }
 
-// ═══════════════════ Month Tabs ═══════════════════
-function renderMonthTabs() {
-  const container = document.getElementById('monthTabs');
-  const allData = loadAllData();
-  const months = Object.keys(allData.months).sort();
-  if (months.length === 0) { container.classList.remove('show'); return; }
-  container.classList.add('show');
-  let html = '';
-  for (const mk of months) {
-    const d = allData.months[mk];
-    html += `<div class="month-tab${mk === appState.activeMonth ? ' active' : ''}" onclick="switchMonth('${mk}')">${d.year}年${d.month}月 <span class="del" onclick="event.stopPropagation();deleteMonth('${mk}')">✕</span></div>`;
-  }
-  container.innerHTML = html;
+// ── Tabs ──
+function renderTabs() {
+  const c = document.getElementById('monthTabs'); const all = load(); const months = Object.keys(all.months).sort();
+  if (months.length === 0) { c.classList.remove('show'); return; }
+  c.classList.add('show');
+  c.innerHTML = months.map(mk => `<div class="month-tab${mk === appState.activeMonth ? ' active' : ''}" onclick="switchMonth('${mk}')">${all.months[mk].year}年${all.months[mk].month}月 <span class="del" onclick="event.stopPropagation();deleteMonth('${mk}')">✕</span></div>`).join('');
 }
-function switchMonth(monthKey) {
-  const allData = loadAllData(); const md = allData.months[monthKey]; if (!md) return;
-  appState.activeMonth = monthKey; appState.currentData = md;
-  document.getElementById('dropZone').style.display = 'none';
-  document.getElementById('fileBar').classList.add('show');
-  document.getElementById('fileName').textContent = md.fileName || '(未知文件)';
-  document.getElementById('restDays').value = md.restDays || 2;
-  document.getElementById('errorSection').classList.remove('show');
-  renderMonthTabs(); renderAll();
-}
-function deleteMonth(monthKey) {
-  if (!confirm(`删除 ${monthKey.replace('-','年')}月？不可恢复。`)) return;
-  const allData = loadAllData(); delete allData.months[monthKey]; saveAllData(allData);
-  if (appState.activeMonth === monthKey) { appState.activeMonth = null; appState.currentData = null; document.querySelectorAll('.section').forEach(s => s.classList.remove('show')); document.getElementById('fileBar').classList.remove('show'); document.getElementById('dropZone').style.display = ''; }
-  renderMonthTabs();
-}
+function switchMonth(mk) { const all = load(); const md = all.months[mk]; if (!md) return; appState.activeMonth = mk; appState.currentData = md;
+  document.getElementById('dropZone').style.display = 'none'; document.getElementById('fileBar').classList.add('show');
+  document.getElementById('fileName').textContent = md.fileName || '(未知文件)'; document.getElementById('restDays').value = md.restDays || 2;
+  document.getElementById('errorSection').classList.remove('show'); renderTabs(); renderAll(); }
+function deleteMonth(mk) { if (!confirm('删除 ' + mk.replace('-','年') + '月？不可恢复')) return;
+  const all = load(); delete all.months[mk]; save(all);
+  if (appState.activeMonth === mk) { appState.activeMonth = null; appState.currentData = null; hideAll(); document.getElementById('fileBar').classList.remove('show'); document.getElementById('dropZone').style.display = ''; }
+  renderTabs(); }
 function deleteCurrentMonth() { if (appState.activeMonth) deleteMonth(appState.activeMonth); }
+function hideAll() { document.querySelectorAll('.section').forEach(s => s.classList.remove('show')); document.getElementById('bottomGrid').classList.remove('show'); document.getElementById('exportBtns').style.display = 'none'; }
 
-// ═══════════════════ Render all ═══════════════════
-function renderAll() {
-  renderAttendanceTable();
-  renderSalaryTable();
-  renderExpenseTable();
-  renderFinanceSummary();
-  document.getElementById('attendanceSection').classList.add('show');
-  document.getElementById('salarySection').classList.add('show');
-  document.getElementById('bottomGrid').style.display = 'grid';
-  document.getElementById('exportBtns').style.display = 'flex';
-}
+// ── Render ──
+function renderAll() { renderAtt(); renderSal(); renderExp(); renderFin();
+  document.getElementById('attendanceSection').classList.add('show'); document.getElementById('salarySection').classList.add('show');
+  document.getElementById('bottomGrid').classList.add('show'); document.getElementById('exportBtns').style.display = 'flex'; }
 
-// ═══════════════════ Attendance ═══════════════════
-function setAttView(view) {
-  appState.attView = view;
-  document.getElementById('btnDayView').classList.toggle('on', view === 'day');
-  document.getElementById('btnTimeView').classList.toggle('on', view === 'time');
-  renderAttendanceTable();
-}
-function renderAttendanceTable() {
-  const data = appState.currentData; if (!data) return;
-  const table = document.getElementById('attendanceTable');
-  const view = appState.attView;
-  document.getElementById('attendanceSection').classList.add('show');
-  let html = '<thead><tr><th class="name-col" rowspan="2">姓名</th>';
-  for (let d = 1; d <= data.totalDays; d++) html += `<th class="${isWE(data.year, data.month, d) ? 'we' : ''}">${d}</th>`;
-  html += '<th class="sum-head" rowspan="2">出勤</th></tr><tr>';
-  for (let d = 1; d <= data.totalDays; d++) html += `<th class="${isWE(data.year, data.month, d) ? 'we' : ''}">${getDow(data.year, data.month, d)}</th>`;
-  html += '</tr></thead><tbody>';
-  for (const emp of data.employees) {
-    html += '<tr>';
-    html += `<td class="name-col">${esc(emp.name)}${emp.totalWorkingDays === 0 ? '<span class="badge warn">无打卡</span>' : ''}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td>`;
+function setAttView(v) { appState.attView = v; document.getElementById('btnDayView').classList.toggle('on', v === 'day'); document.getElementById('btnTimeView').classList.toggle('on', v === 'time'); renderAtt(); }
+
+function renderAtt() {
+  const d = appState.currentData; if (!d) return;
+  const t = document.getElementById('attendanceTable'); const v = appState.attView;
+  let h = '<thead><tr><th class="name-col" rowspan="2">姓名</th>';
+  for (let i = 1; i <= d.totalDays; i++) h += `<th class="${isWE(d.year, d.month, i) ? 'we' : ''}">${i}</th>`;
+  h += '<th class="sum-head" rowspan="2">出勤</th></tr><tr>';
+  for (let i = 1; i <= d.totalDays; i++) h += `<th class="${isWE(d.year, d.month, i) ? 'we' : ''}">${dow(d.year, d.month, i)}</th>`;
+  h += '</tr></thead><tbody>';
+  for (const emp of d.employees) {
+    h += `<tr><td class="name-col">${esc(emp.name)}${emp.totalWorkingDays === 0 ? '<span class="badge warn">无打卡</span>' : ''}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td>`;
     for (const dd of emp.dailyDetail) {
-      if (view === 'day') {
-        if (dd.weight === 1) html += `<td class="e1">1</td>`;
-        else if (dd.weight === 0.5) html += `<td class="e05">0.5</td>`;
-        else html += '<td class="e0">·</td>';
+      if (v === 'day') {
+        if (dd.weight === 1) h += '<td class="e1">1</td>';
+        else if (dd.weight === 0.5) h += '<td class="e05">0.5</td>';
+        else h += '<td class="e0">·</td>';
       } else {
-        if (dd.times.length > 0) html += `<td class="${dd.weight === 0.5 ? 'e05' : ''}" style="font-size:10px">${esc(dd.times[0])}→${esc(dd.times[dd.times.length - 1])}</td>`;
-        else html += '<td class="e0">·</td>';
+        if (dd.times.length > 0) h += `<td class="${dd.weight === 0.5 ? 'e05' : ''}" style="font-size:10px">${esc(dd.times[0])}→${esc(dd.times[dd.times.length - 1])}</td>`;
+        else h += '<td class="e0">·</td>';
       }
     }
-    html += `<td class="sum-col">${emp.totalWorkingDays}</td></tr>`;
+    h += `<td class="sum-col">${emp.totalWorkingDays}</td></tr>`;
   }
-  html += '</tbody>';
-  table.innerHTML = html;
+  h += '</tbody>'; t.innerHTML = h;
 }
 
-// ═══════════════════ Salary ═══════════════════
-function getSal(name) { return (appState.currentData.salary || {})[name] || {}; }
-function setSal(name, u) { if (!appState.currentData.salary) appState.currentData.salary = {}; if (!appState.currentData.salary[name]) appState.currentData.salary[name] = {}; Object.assign(appState.currentData.salary[name], u); }
+// ── Salary ──
+function gs(name) { return (appState.currentData.salary || {})[name] || {}; }
+function ss(name, u) { if (!appState.currentData.salary) appState.currentData.salary = {}; if (!appState.currentData.salary[name]) appState.currentData.salary[name] = {}; Object.assign(appState.currentData.salary[name], u); }
 
-function renderSalaryTable() {
-  const data = appState.currentData; if (!data) return;
-  const table = document.getElementById('salaryTable');
-  const expectedDays = data.totalDays - (data.restDays || 2);
-  let html = '<thead><tr><th>姓名</th><th>部门</th><th>方式</th><th>金额</th><th>出勤</th><th>应出勤</th><th>应发</th><th>月中支出</th><th>实发</th><th>备注</th><th></th></tr></thead><tbody>';
-  let totalBase = 0, totalMid = 0, totalActual = 0;
-  for (const emp of data.employees) {
-    const sal = getSal(emp.name);
-    const mode = sal.mode || 'monthly';
-    const inputValue = sal.inputValue !== undefined ? sal.inputValue : '';
-    const wd = emp.totalWorkingDays;
-    const basePay = calcBasePay(mode, inputValue, wd, expectedDays);
-    const midDeduct = sal.midDeduct || 0;
-    const actualPay = calcActualPay(basePay, midDeduct);
-    const note = sal.note || '';
-    setSal(emp.name, { mode, inputValue, workingDays: wd, expectedDays, basePay, midDeduct, actualPay, note });
-    if (basePay !== null) totalBase += basePay;
-    totalMid += midDeduct;
-    if (actualPay !== null) totalActual += actualPay;
-    html += '<tr>';
-    html += `<td class="name-cell">${esc(emp.name)}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td>`;
-    html += `<td>${esc(emp.department)}</td>`;
-    html += `<td><select class="salary-mode" data-name="${esc(emp.name)}" onchange="onModeChange(this)"><option value="monthly"${mode === 'monthly' ? ' selected' : ''}>月薪</option><option value="daily"${mode === 'daily' ? ' selected' : ''}>日薪</option></select></td>`;
-    html += `<td><input type="number" min="0" step="0.01" value="${esc(String(inputValue))}" data-name="${esc(emp.name)}" data-field="inputValue" placeholder="${mode === 'daily' ? '日薪' : '月薪'}" onchange="onSalaryChange(this)" oninput="onSalaryInput(this)"></td>`;
-    html += `<td><input class="days-inp" type="number" min="0" step="0.5" value="${wd}" data-name="${esc(emp.name)}" data-field="workingDays" onchange="onDaysChange(this)" oninput="onSalaryInput(this)"></td>`;
-    html += `<td><input class="days-inp" type="number" min="0" step="1" value="${expectedDays}" data-name="${esc(emp.name)}" data-field="expectedDays" onchange="onDaysChange(this)" oninput="onSalaryInput(this)"></td>`;
-    html += `<td class="base-pay" id="base-${cssSafe(emp.name)}">${basePay !== null ? '¥' + basePay.toFixed(2) : '-'}</td>`;
-    html += `<td><input type="number" min="0" step="0.01" value="${esc(String(midDeduct))}" data-name="${esc(emp.name)}" data-field="midDeduct" onchange="onSalaryChange(this)" oninput="onSalaryInput(this)" style="width:64px"></td>`;
-    html += `<td class="ap" id="actual-${cssSafe(emp.name)}">${actualPay !== null ? '¥' + actualPay.toFixed(2) : '-'}</td>`;
-    html += `<td><input class="note-inp" type="text" value="${esc(note)}" data-name="${esc(emp.name)}" data-field="note" onchange="onSalaryChange(this)" placeholder="..."></td>`;
-    html += `<td><button class="btn btn-red btn-sm" onclick="removeEmployee('${esc(emp.name)}')">移除</button></td>`;
-    html += '</tr>';
+function renderSal() {
+  const d = appState.currentData; if (!d) return;
+  const t = document.getElementById('salaryTable'); const ed = d.totalDays - (d.restDays || 2);
+  let h = '<thead><tr><th>姓名</th><th>部门</th><th>方式</th><th>金额</th><th>出勤</th><th>应出勤</th><th>应发</th><th>月中支出</th><th>实发</th><th>备注</th><th></th></tr></thead><tbody>';
+  let tb = 0, tm = 0, ta = 0;
+  for (const emp of d.employees) {
+    const sal = gs(emp.name); const mode = sal.mode || 'monthly'; const iv = sal.inputValue !== undefined ? sal.inputValue : '';
+    const wd = emp.totalWorkingDays; const bp = calcBP(mode, iv, wd, ed); const md = sal.midDeduct || 0; const ap = calcAP(bp, md); const note = sal.note || '';
+    ss(emp.name, { mode, inputValue: iv, workingDays: wd, expectedDays: ed, basePay: bp, midDeduct: md, actualPay: ap, note });
+    if (bp !== null) tb += bp; tm += md; if (ap !== null) ta += ap;
+    h += `<tr><td class="name-cell">${esc(emp.name)}${emp.isManual ? '<span class="badge man">手动</span>' : ''}</td><td>${esc(emp.department)}</td>`;
+    h += `<td><select class="salary-mode" data-name="${esc(emp.name)}" onchange="onMC(this)"><option value="monthly"${mode==='monthly'?' selected':''}>月薪</option><option value="daily"${mode==='daily'?' selected':''}>日薪</option></select></td>`;
+    h += `<td><input type="number" min="0" step="0.01" value="${esc(String(iv))}" data-name="${esc(emp.name)}" data-field="inputValue" placeholder="${mode==='daily'?'日薪':'月薪'}" onchange="onSC(this)" oninput="onSI(this)"></td>`;
+    h += `<td><input class="days-inp" type="number" min="0" step="0.5" value="${wd}" data-name="${esc(emp.name)}" data-field="workingDays" onchange="onDC(this)" oninput="onSI(this)"></td>`;
+    h += `<td><input class="days-inp" type="number" min="0" step="1" value="${ed}" data-name="${esc(emp.name)}" data-field="expectedDays" onchange="onDC(this)" oninput="onSI(this)"></td>`;
+    h += `<td class="base-pay" id="bp-${cs(emp.name)}">${bp!==null?'¥'+bp.toFixed(2):'-'}</td>`;
+    h += `<td><input type="number" min="0" step="0.01" value="${esc(String(md))}" data-name="${esc(emp.name)}" data-field="midDeduct" onchange="onSC(this)" oninput="onSI(this)" style="width:64px"></td>`;
+    h += `<td class="ap" id="ap-${cs(emp.name)}">${ap!==null?'¥'+ap.toFixed(2):'-'}</td>`;
+    h += `<td><input class="note-inp" type="text" value="${esc(note)}" data-name="${esc(emp.name)}" data-field="note" onchange="onSC(this)" placeholder="..."></td>`;
+    h += `<td><button class="btn btn-red btn-sm" onclick="removeEmp('${esc(emp.name)}')">移除</button></td></tr>`;
   }
-  html += `<tr class="trow"><td colspan="6">合计</td><td>¥${totalBase.toFixed(2)}</td><td>¥${totalMid.toFixed(2)}</td><td>¥${totalActual.toFixed(2)}</td><td></td><td></td></tr></tbody>`;
-  table.innerHTML = html;
-  saveCurrentMonth();
+  h += `<tr class="trow"><td colspan="6">合计</td><td>¥${tb.toFixed(2)}</td><td>¥${tm.toFixed(2)}</td><td>¥${ta.toFixed(2)}</td><td></td><td></td></tr></tbody>`;
+  t.innerHTML = h; saveMonth();
 }
 
-function recalcSal(name) {
-  const sal = getSal(name); const mode = sal.mode || 'monthly';
-  const inputValue = sal.inputValue !== undefined ? sal.inputValue : '';
-  const wd = sal.workingDays !== undefined ? sal.workingDays : 0;
-  const ed = sal.expectedDays || (appState.currentData.totalDays - (appState.currentData.restDays || 2));
-  const basePay = calcBasePay(mode, inputValue, wd, ed);
-  const midDeduct = sal.midDeduct || 0;
-  const actualPay = calcActualPay(basePay, midDeduct);
-  setSal(name, { basePay, actualPay, workingDays: wd, expectedDays: ed });
-  const be = document.getElementById('base-' + cssSafe(name)), ae = document.getElementById('actual-' + cssSafe(name));
-  if (be) be.textContent = basePay !== null ? '¥' + basePay.toFixed(2) : '-';
-  if (ae) ae.textContent = actualPay !== null ? '¥' + actualPay.toFixed(2) : '-';
+function recalc(name) {
+  const sal = gs(name); const mode = sal.mode || 'monthly'; const iv = sal.inputValue !== undefined ? sal.inputValue : '';
+  const wd = sal.workingDays !== undefined ? sal.workingDays : 0; const ed = sal.expectedDays || (appState.currentData.totalDays - (appState.currentData.restDays || 2));
+  const bp = calcBP(mode, iv, wd, ed); const md = sal.midDeduct || 0; const ap = calcAP(bp, md);
+  ss(name, { basePay: bp, actualPay: ap, workingDays: wd, expectedDays: ed });
+  const be = document.getElementById('bp-' + cs(name)), ae = document.getElementById('ap-' + cs(name));
+  if (be) be.textContent = bp !== null ? '¥' + bp.toFixed(2) : '-';
+  if (ae) ae.textContent = ap !== null ? '¥' + ap.toFixed(2) : '-';
 }
-
-function onSalaryInput(input) { recalcSal(input.dataset.name); updateTotals(); renderFinanceSummary(); }
-function onSalaryChange(input) { recalcSal(input.dataset.name); updateTotals(); renderFinanceSummary();
-  const name = input.dataset.name; const sal = getSal(name);
-  const allData = loadAllData(); if (!allData.employees[name]) allData.employees[name] = {};
-  allData.employees[name].mode = sal.mode || 'monthly'; allData.employees[name].value = sal.inputValue !== undefined ? sal.inputValue : '';
-  saveAllData(allData); saveCurrentMonth();
+function onSI(inp) { recalc(inp.dataset.name); updateTotals(); renderFin(); }
+function onSC(inp) { recalc(inp.dataset.name); updateTotals(); renderFin();
+  const name = inp.dataset.name; const sal = gs(name); const all = load();
+  if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sal.mode || 'monthly'; all.emps[name].value = sal.inputValue !== undefined ? sal.inputValue : '';
+  save(all); saveMonth();
 }
-function onDaysChange(input) { const name = input.dataset.name, field = input.dataset.field, val = parseFloat(input.value) || 0;
-  setSal(name, { [field]: val }); if (field === 'workingDays') { const emp = appState.currentData.employees.find(e => e.name === name); if (emp) emp.totalWorkingDays = val; }
-  recalcSal(name); updateTotals(); renderFinanceSummary(); saveCurrentMonth();
+function onDC(inp) { const name = inp.dataset.name; const f = inp.dataset.field; const v = parseFloat(inp.value) || 0;
+  ss(name, { [f]: v }); if (f === 'workingDays') { const emp = appState.currentData.employees.find(e => e.name === name); if (emp) emp.totalWorkingDays = v; }
+  recalc(name); updateTotals(); renderFin(); saveMonth();
 }
-function onModeChange(select) { const name = select.dataset.name; setSal(name, { mode: select.value });
-  const allData = loadAllData(); if (!allData.employees[name]) allData.employees[name] = {}; allData.employees[name].mode = select.value; saveAllData(allData);
-  const input = document.querySelector(`input[data-name="${esc(name)}"][data-field="inputValue"]`);
-  if (input) { input.placeholder = select.value === 'daily' ? '日薪' : '月薪'; recalcSal(name); updateTotals(); renderFinanceSummary(); }
-  saveCurrentMonth();
+function onMC(sel) { const name = sel.dataset.name; ss(name, { mode: sel.value });
+  const all = load(); if (!all.emps[name]) all.emps[name] = {}; all.emps[name].mode = sel.value; save(all);
+  const inp = document.querySelector(`input[data-name="${esc(name)}"][data-field="inputValue"]`);
+  if (inp) { inp.placeholder = sel.value === 'daily' ? '日薪' : '月薪'; recalc(name); updateTotals(); renderFin(); } saveMonth();
 }
 function updateTotals() {
-  const data = appState.currentData; if (!data) return; let tb = 0, tm = 0, ta = 0;
-  for (const emp of data.employees) { const s = getSal(emp.name); if (s.basePay !== null) tb += s.basePay; tm += s.midDeduct || 0; if (s.actualPay !== null) ta += s.actualPay; }
+  const d = appState.currentData; if (!d) return; let tb = 0, tm = 0, ta = 0;
+  for (const emp of d.employees) { const s = gs(emp.name); if (s.basePay !== null) tb += s.basePay; tm += s.midDeduct || 0; if (s.actualPay !== null) ta += s.actualPay; }
   const rows = document.querySelectorAll('table.sal tbody tr.trow td'); if (rows.length >= 3) { rows[0].textContent = '¥' + tb.toFixed(2); rows[1].textContent = '¥' + tm.toFixed(2); rows[2].textContent = '¥' + ta.toFixed(2); }
 }
-function onRestDaysChange() { if (!appState.currentData) return;
-  appState.currentData.restDays = parseInt(document.getElementById('restDays').value) || 2;
+function onRestDaysChange() { if (!appState.currentData) return; appState.currentData.restDays = parseInt(document.getElementById('restDays').value) || 2;
   const ed = appState.currentData.totalDays - appState.currentData.restDays;
-  for (const emp of appState.currentData.employees) { const sal = getSal(emp.name); const bp = calcBasePay(sal.mode || 'monthly', sal.inputValue !== undefined ? sal.inputValue : '', emp.totalWorkingDays, ed); const ap = calcActualPay(bp, sal.midDeduct || 0); setSal(emp.name, { basePay: bp, actualPay: ap, expectedDays: ed }); }
-  saveCurrentMonth(); renderAll();
-}
+  for (const emp of appState.currentData.employees) { const s = gs(emp.name); const bp = calcBP(s.mode || 'monthly', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, ed); const ap = calcAP(bp, s.midDeduct || 0); ss(emp.name, { basePay: bp, actualPay: ap, expectedDays: ed }); }
+  saveMonth(); renderAll(); }
 
-// ═══════════════════ Employees ═══════════════════
+// ── Employees ──
 function showAddEmployeeModal() { document.getElementById('addEmpModal').classList.add('show'); document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpName').focus(); }
 function closeAddEmployeeModal() { document.getElementById('addEmpModal').classList.remove('show'); }
 function addEmployee() { const name = document.getElementById('newEmpName').value.trim(); if (!name) return alert('请输入姓名');
-  const dept = document.getElementById('newEmpDept').value.trim(); const data = appState.currentData;
-  if (data.employees.find(e => e.name === name)) return alert('该人员已存在');
-  const emp = makeEmptyEmployee(name, dept, data.totalDays); emp.isManual = true; data.employees.push(emp);
-  const ed = data.totalDays - (data.restDays || 2); data.salary[name] = makeDefaultSalary(ed);
-  if (!data.manualEmployees) data.manualEmployees = []; data.manualEmployees.push({ name, department: dept });
-  closeAddEmployeeModal(); saveCurrentMonth(); renderAll();
-}
-function removeEmployee(name) { if (!confirm(`从本月工资表中移除「${name}」？`)) return;
-  const data = appState.currentData; data.employees = data.employees.filter(e => e.name !== name); delete data.salary[name];
-  if (data.manualEmployees) data.manualEmployees = data.manualEmployees.filter(e => e.name !== name);
-  saveCurrentMonth(); renderAll();
-}
+  const dept = document.getElementById('newEmpDept').value.trim(); const d = appState.currentData; if (d.employees.find(e => e.name === name)) return alert('已存在');
+  const emp = emptyEmp(name, dept, d.totalDays); emp.isManual = true; d.employees.push(emp);
+  d.salary[name] = defSal(d.totalDays - (d.restDays || 2)); if (!d.manual) d.manual = []; d.manual.push({ name, dept });
+  closeAddEmployeeModal(); saveMonth(); renderAll(); }
+function removeEmp(name) { if (!confirm('移除「' + name + '」？')) return;
+  const d = appState.currentData; d.employees = d.employees.filter(e => e.name !== name); delete d.salary[name];
+  if (d.manual) d.manual = d.manual.filter(e => e.name !== name); saveMonth(); renderAll(); }
 
-// ═══════════════════ Expenses ═══════════════════
-function renderExpenseTable() { const data = appState.currentData; if (!data) return;
-  const table = document.getElementById('expenseTable'); const expenses = data.expenses || [];
-  let html = '<thead><tr><th>项目</th><th>金额</th><th></th></tr></thead><tbody>'; let total = 0;
-  for (const ex of expenses) { total += ex.amount || 0;
-    html += '<tr>';
-    html += `<td><input class="ni" type="text" value="${esc(ex.name || '')}" data-expense-id="${ex.id}" data-field="name" onchange="onExpChange(this)" placeholder="支出项目"></td>`;
-    html += `<td><input type="number" step="0.01" value="${ex.amount || ''}" data-expense-id="${ex.id}" data-field="amount" onchange="onExpChange(this)" placeholder="金额"></td>`;
-    html += `<td><button class="btn btn-red btn-sm" onclick="deleteExpense('${ex.id}')">✕</button></td></tr>`;
-  }
-  html += expenses.length ? `<tr style="font-weight:700;background:#f8fafc"><td>合计</td><td>¥${total.toFixed(2)}</td><td></td></tr>` : '<tr><td colspan="3" style="color:#94a3b8;padding:10px">暂无其他支出</td></tr>';
-  html += '</tbody>'; table.innerHTML = html;
-}
-function addExpense() { const data = appState.currentData; if (!data.expenses) data.expenses = []; data.expenses.push({ id: ++expenseIdCounter, name: '', amount: 0 }); saveCurrentMonth(); renderExpenseTable(); renderFinanceSummary(); }
-function deleteExpense(id) { const data = appState.currentData; if (!data.expenses) return; data.expenses = data.expenses.filter(e => e.id != id); saveCurrentMonth(); renderExpenseTable(); renderFinanceSummary(); }
-function onExpChange(input) { const data = appState.currentData; if (!data.expenses) return; const ex = data.expenses.find(e => e.id == input.dataset.expenseId); if (!ex) return;
-  if (input.dataset.field === 'name') ex.name = input.value.trim(); else ex.amount = input.value.trim() === '' ? 0 : (parseFloat(input.value) || 0);
-  saveCurrentMonth(); renderExpenseTable(); renderFinanceSummary();
-}
+// ── Expenses ──
+function renderExp() { const d = appState.currentData; if (!d) return; const t = document.getElementById('expenseTable'); const exps = d.expenses || [];
+  let h = '<thead><tr><th>项目</th><th>金额</th><th></th></tr></thead><tbody>'; let total = 0;
+  for (const ex of exps) { total += ex.amount || 0;
+    h += `<tr><td><input class="ni" type="text" value="${esc(ex.name || '')}" data-id="${ex.id}" data-field="name" onchange="onExpC(this)" placeholder="支出项目"></td><td><input type="number" step="0.01" value="${ex.amount || ''}" data-id="${ex.id}" data-field="amount" onchange="onExpC(this)" placeholder="金额"></td><td><button class="btn btn-red btn-sm" onclick="delExp('${ex.id}')">✕</button></td></tr>`; }
+  h += exps.length ? `<tr style="font-weight:700;background:#f8fafc"><td>合计</td><td>¥${total.toFixed(2)}</td><td></td></tr>` : '<tr><td colspan="3" style="color:#94a3b8;padding:10px">暂无其他支出</td></tr>';
+  h += '</tbody>'; t.innerHTML = h; }
+function addExpense() { const d = appState.currentData; if (!d.expenses) d.expenses = []; d.expenses.push({ id: ++expId, name: '', amount: 0 }); saveMonth(); renderExp(); renderFin(); }
+function delExp(id) { const d = appState.currentData; if (!d.expenses) return; d.expenses = d.expenses.filter(e => e.id != id); saveMonth(); renderExp(); renderFin(); }
+function onExpC(inp) { const d = appState.currentData; if (!d.expenses) return; const ex = d.expenses.find(e => e.id == inp.dataset.id); if (!ex) return;
+  if (inp.dataset.field === 'name') ex.name = inp.value.trim(); else ex.amount = inp.value.trim() === '' ? 0 : (parseFloat(inp.value) || 0);
+  saveMonth(); renderExp(); renderFin(); }
 
-// ═══════════════════ Finance ═══════════════════
-function renderFinanceSummary() { const data = appState.currentData; if (!data) return; if (!data.finance) data.finance = {};
-  let salaryTotal = 0, midTotal = 0; for (const emp of data.employees) { const s = getSal(emp.name); if (s.actualPay !== null) salaryTotal += s.actualPay; midTotal += s.midDeduct || 0; }
-  let expenseTotal = 0; for (const ex of (data.expenses || [])) expenseTotal += ex.amount || 0;
-  const transferIn = data.finance.transferIn !== undefined ? data.finance.transferIn : '';
-  const balancePrev = data.finance.balancePrev || 0;
-  const grandTotal = salaryTotal + midTotal + expenseTotal + balancePrev;
-  const balanceMonth = (parseFloat(transferIn) || 0) - grandTotal;
-  data.finance.transferIn = transferIn; data.finance.balancePrev = balancePrev; data.finance.balanceMonth = Math.round(balanceMonth * 100) / 100;
-  document.getElementById('finGrandTotal').textContent = '¥' + grandTotal.toFixed(2);
-  const breadEl = document.getElementById('finBreakdown');
-  breadEl.innerHTML = `<span>实发 <b>${salaryTotal.toFixed(2)}</b></span><span class="sep">+</span><span>月中扣 <b style="color:#fca5a5">${midTotal.toFixed(2)}</b></span><span class="sep">+</span><span>其他 <b>${expenseTotal.toFixed(2)}</b></span><span class="sep">+</span><span>上月结余 <b>${balancePrev.toFixed(2)}</b></span>`;
-  document.getElementById('finTransferIn').value = transferIn !== '' ? transferIn : '';
-  document.getElementById('finBalancePrev').value = balancePrev !== '' ? balancePrev : '';
-  const rEl = document.getElementById('finResult'); const rVal = document.getElementById('finRemaining');
-  rVal.textContent = (data.finance.balanceMonth >= 0 ? '+' : '') + '¥' + data.finance.balanceMonth.toFixed(2);
-  rEl.className = 'fin-result ' + (data.finance.balanceMonth >= 0 ? 'pos' : 'neg');
-  saveCurrentMonth();
-}
-function onFinanceChange() { const data = appState.currentData; if (!data || !data.finance) return;
-  data.finance.transferIn = document.getElementById('finTransferIn').value.trim() === '' ? '' : (parseFloat(document.getElementById('finTransferIn').value) || 0);
-  data.finance.balancePrev = document.getElementById('finBalancePrev').value.trim() === '' ? 0 : (parseFloat(document.getElementById('finBalancePrev').value) || 0);
-  renderFinanceSummary();
-}
+// ── Finance ──
+function renderFin() { const d = appState.currentData; if (!d) return; if (!d.finance) d.finance = {};
+  let st = 0, mt = 0; for (const emp of d.employees) { const s = gs(emp.name); if (s.actualPay !== null) st += s.actualPay; mt += s.midDeduct || 0; }
+  let et = 0; for (const ex of (d.expenses || [])) et += ex.amount || 0;
+  const ti = d.finance.transferIn !== undefined ? d.finance.transferIn : ''; const bp = d.finance.balancePrev || 0;
+  const gt = st + mt + et + bp; const bm = (parseFloat(ti) || 0) - gt;
+  d.finance.transferIn = ti; d.finance.balancePrev = bp; d.finance.balanceMonth = Math.round(bm * 100) / 100;
+  document.getElementById('finGrandTotal').textContent = '¥' + gt.toFixed(2);
+  document.getElementById('finBreakdown').innerHTML = `<span>实发 <b>${st.toFixed(2)}</b></span><span class="sep">+</span><span>月中扣 <b style="color:#fca5a5">${mt.toFixed(2)}</b></span><span class="sep">+</span><span>其他 <b>${et.toFixed(2)}</b></span><span class="sep">+</span><span>上月结余 <b>${bp.toFixed(2)}</b></span>`;
+  document.getElementById('finTransferIn').value = ti !== '' ? ti : ''; document.getElementById('finBalancePrev').value = bp !== '' ? bp : '';
+  const re = document.getElementById('finResult'), rv = document.getElementById('finRemaining');
+  rv.textContent = (d.finance.balanceMonth >= 0 ? '+' : '') + '¥' + d.finance.balanceMonth.toFixed(2);
+  re.className = 'fin-result ' + (d.finance.balanceMonth >= 0 ? 'pos' : 'neg'); saveMonth(); }
+function onFinanceChange() { const d = appState.currentData; if (!d || !d.finance) return;
+  d.finance.transferIn = document.getElementById('finTransferIn').value.trim() === '' ? '' : (parseFloat(document.getElementById('finTransferIn').value) || 0);
+  d.finance.balancePrev = document.getElementById('finBalancePrev').value.trim() === '' ? 0 : (parseFloat(document.getElementById('finBalancePrev').value) || 0);
+  renderFin(); }
 
-// ═══════════════════ Export ═══════════════════
-function exportXlsx() { const data = appState.currentData; if (!data) return alert('请先加载打卡记录');
-  const attRows = []; const h1 = ['姓名']; for (let d = 1; d <= data.totalDays; d++) h1.push(`${d}`); h1.push('出勤天数'); attRows.push(h1);
-  const h2 = ['']; for (let d = 1; d <= data.totalDays; d++) h2.push(getDow(data.year, data.month, d)); h2.push(''); attRows.push(h2);
-  for (const emp of data.employees) { const r = [emp.name]; for (const dd of emp.dailyDetail) r.push(dd.weight === 1 ? '1' : dd.weight === 0.5 ? '0.5' : '-'); r.push(emp.totalWorkingDays); attRows.push(r); }
-  const salRows = [['姓名','部门','计算方式','日薪/月薪','出勤天数','应出勤天数','应发工资','月中支出','实发工资','备注']];
-  for (const emp of data.employees) { const s = getSal(emp.name); salRows.push([emp.name, emp.department, s.mode === 'daily' ? '日薪' : '月薪', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, data.totalDays - (data.restDays || 2), s.basePay !== null ? s.basePay : '', s.midDeduct || 0, s.actualPay !== null ? s.actualPay : '', s.note || '']); }
-  const finRows = [['其他支出'], ['项目', '金额']]; for (const ex of (data.expenses || [])) finRows.push([ex.name, ex.amount]);
-  let et = 0; for (const ex of (data.expenses || [])) et += ex.amount || 0; finRows.push(['支出合计', et]); finRows.push([]);
-  finRows.push(['财务汇总']); finRows.push(['本月总计', (data.finance || {}).balancePrev + (() => { let s = 0; for (const e of data.employees) { const sal = getSal(e.name); if (sal.actualPay !== null) s += sal.actualPay; } return s; })() + et]); finRows.push(['本月实际转入', (data.finance || {}).transferIn || 0]); finRows.push(['上月结余', (data.finance || {}).balancePrev || 0]); finRows.push(['本月剩余', (data.finance || {}).balanceMonth || 0]);
+// ── Export ──
+function exportXlsx() { const d = appState.currentData; if (!d) return alert('请先加载打卡记录');
+  const ar = []; const h1 = ['姓名']; for (let i = 1; i <= d.totalDays; i++) h1.push(`${i}`); h1.push('出勤天数'); ar.push(h1);
+  ar.push([''].concat(Array.from({length: d.totalDays}, (_, i) => dow(d.year, d.month, i + 1))).concat(['']));
+  for (const emp of d.employees) ar.push([emp.name].concat(emp.dailyDetail.map(dd => dd.weight === 1 ? '1' : dd.weight === 0.5 ? '0.5' : '-')).concat([emp.totalWorkingDays]));
+  const sr = [['姓名','部门','计算方式','日薪/月薪','出勤天数','应出勤天数','应发工资','月中支出','实发工资','备注']];
+  for (const emp of d.employees) { const s = gs(emp.name); sr.push([emp.name, emp.department, s.mode === 'daily' ? '日薪' : '月薪', s.inputValue !== undefined ? s.inputValue : '', emp.totalWorkingDays, d.totalDays - (d.restDays || 2), s.basePay !== null ? s.basePay : '', s.midDeduct || 0, s.actualPay !== null ? s.actualPay : '', s.note || '']); }
+  const fr = [['其他支出'], ['项目', '金额']]; for (const ex of (d.expenses || [])) fr.push([ex.name, ex.amount]);
+  let et = 0; for (const ex of (d.expenses || [])) et += ex.amount || 0; fr.push(['支出合计', et]); fr.push([]);
+  fr.push(['财务汇总']); let st2 = 0, mt2 = 0; for (const emp of d.employees) { const s = gs(emp.name); if (s.actualPay !== null) st2 += s.actualPay; mt2 += s.midDeduct || 0; }
+  fr.push(['本月总计', st2 + mt2 + et + ((d.finance || {}).balancePrev || 0)]); fr.push(['本月实际转入', (d.finance || {}).transferIn || 0]); fr.push(['上月结余', (d.finance || {}).balancePrev || 0]); fr.push(['本月剩余', (d.finance || {}).balanceMonth || 0]);
   const wb = XLSX.utils.book_new();
-  const ws1 = XLSX.utils.aoa_to_sheet(attRows); ws1['!cols'] = [{wch:10}].concat(Array(data.totalDays).fill({wch:8})).concat([{wch:10}]); XLSX.utils.book_append_sheet(wb, ws1, '打卡汇总');
-  const ws2 = XLSX.utils.aoa_to_sheet(salRows); ws2['!cols'] = [{wch:10},{wch:14},{wch:8},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:12},{wch:10}]; XLSX.utils.book_append_sheet(wb, ws2, '工资计算');
-  const ws3 = XLSX.utils.aoa_to_sheet(finRows); ws3['!cols'] = [{wch:20},{wch:14}]; XLSX.utils.book_append_sheet(wb, ws3, '支出与汇总');
-  XLSX.writeFile(wb, `工资计算_${data.year}年${data.month}月.xlsx`);
-}
+  const ws1 = XLSX.utils.aoa_to_sheet(ar); ws1['!cols'] = [{wch:10}].concat(Array(d.totalDays).fill({wch:8})).concat([{wch:10}]); XLSX.utils.book_append_sheet(wb, ws1, '打卡汇总');
+  const ws2 = XLSX.utils.aoa_to_sheet(sr); ws2['!cols'] = [{wch:10},{wch:14},{wch:8},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:12},{wch:10}]; XLSX.utils.book_append_sheet(wb, ws2, '工资计算');
+  const ws3 = XLSX.utils.aoa_to_sheet(fr); ws3['!cols'] = [{wch:20},{wch:14}]; XLSX.utils.book_append_sheet(wb, ws3, '支出与汇总');
+  XLSX.writeFile(wb, `工资计算_${d.year}年${d.month}月.xlsx`); }
 
-// ═══════════════════ Init ═══════════════════
-(function init() {
-  const allData = loadAllData(); const months = Object.keys(allData.months).sort();
-  if (months.length > 0) { const last = months[months.length - 1]; appState.activeMonth = last; appState.currentData = allData.months[last];
+// ── Init ──
+(function() {
+  const all = load(); const months = Object.keys(all.months).sort();
+  if (months.length > 0) { const last = months[months.length - 1]; appState.activeMonth = last; appState.currentData = all.months[last];
     document.getElementById('dropZone').style.display = 'none'; document.getElementById('fileBar').classList.add('show');
-    document.getElementById('fileName').textContent = appState.currentData.fileName || '(未知文件)';
-    document.getElementById('restDays').value = appState.currentData.restDays || 2;
-    renderMonthTabs(); renderAll();
-  }
+    document.getElementById('fileName').textContent = appState.currentData.fileName || '(未知文件)'; document.getElementById('restDays').value = appState.currentData.restDays || 2;
+    renderTabs(); renderAll(); }
 })();
 </script>
 </body>
